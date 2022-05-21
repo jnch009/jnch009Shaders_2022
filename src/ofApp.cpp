@@ -21,23 +21,31 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-    glm::vec3 curPos = triangle.getVertex(2);
-
+void setVertexPosition(glm::vec3 curPos, int key, int amount) {
     /* move 20 points upwards if keypress is down arrow*/
     if (key == 57359) {
-        triangle.setVertex(2, curPos + glm::vec3(0, 20, 0));
+        triangle.setVertex(2, curPos + glm::vec3(0, amount, 0));
     }
 
     /* move 20 points downwards if keypress is up arrow*/
     if (key == 57357) {
-        triangle.setVertex(2, curPos + glm::vec3(0, 20, 0));
+        triangle.setVertex(2, curPos + glm::vec3(0, -amount, 0));
     }
 
     /* move 20 points left if keypress is left arrow*/
     if (key == 57356) {
-        triangle.setVertex(2, curPos + glm::vec3(-20, 0, 0));
+        triangle.setVertex(2, curPos + glm::vec3(-amount, 0, 0));
     }
+
+    /* move 20 points right if keypress is right arrow*/
+    if (key == 57358) {
+        triangle.setVertex(2, curPos + glm::vec3(amount, 0, 0));
+    }
+}
+
+void ofApp::keyPressed(int key){
+    glm::vec3 curPos = triangle.getVertex(2);
+    setVertexPosition(curPos, key, 100);
 }
 
 //--------------------------------------------------------------
