@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\data\first_vertex.vert" />
+    <None Include="bin\data\first_fragment.frag" />
   </ItemGroup>
 </Project>
