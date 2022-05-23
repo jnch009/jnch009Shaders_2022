@@ -4,10 +4,10 @@
 
 ofMesh triangle;
 //--------------------------------------------------------------
-void ofApp::setup(){
-    triangle.addVertex(glm::vec3(0.0, 0.0, 0.0));
-    triangle.addVertex(glm::vec3(0.0, 768.0f, 0.0));
-    triangle.addVertex(glm::vec3(1024.0, 768.0, 0.0));
+void ofApp::setup() {
+    triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
+    triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
+    triangle.addVertex(glm::vec3(1.0f, -1.0f, 0.0f));
 }
 
 //--------------------------------------------------------------
