@@ -6,6 +6,11 @@ void ofApp::setup() {
     triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
     triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
     triangle.addVertex(glm::vec3(1.0f, -1.0f, 0.0f));
+
+    triangle.addColor(ofFloatColor(1.0f, 0.0f, 0.0f, 1.0f));
+    triangle.addColor(ofFloatColor(0.0f, 1.0f, 0.0f, 1.0f));
+    triangle.addColor(ofFloatColor(0.0f, 0.0f, 1.0f, 1.0f));
+
     shader.load("first_vertex.vert", "first_fragment.frag");
 }
 
