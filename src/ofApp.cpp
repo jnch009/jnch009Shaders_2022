@@ -2,6 +2,9 @@
 
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 //--------------------------------------------------------------
+
+glm::vec4 triangleColor = glm::vec4(1, 0.25, 1, 0.45);
+
 void ofApp::setup() {
     triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
     triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -10,8 +13,6 @@ void ofApp::setup() {
     triangle.addColor(ofFloatColor(1.0f, 0.0f, 0.0f, 1.0f));
     triangle.addColor(ofFloatColor(0.0f, 1.0f, 0.0f, 1.0f));
     triangle.addColor(ofFloatColor(0.0f, 0.0f, 1.0f, 1.0f));
-
-    triangleColor = glm::vec4(1, 0.25, 1, 0.45);
 
     shader.load("first_vertex.vert", "first_fragment.frag");
 }
@@ -30,15 +31,15 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void determineColor(glm::vec4 triangleColor, int key) {
+void determineColor(int key) {
     /* rgb(1,0,1,1) if keypress is down arrow*/
     if (key == 57359) {
         triangleColor = glm::vec4(1, 0, 1, 1);
     }
 
-    /* rgb(1,1,1,1) if keypress is up arrow*/
+    /* rgb(1,1,1,0.25) if keypress is up arrow*/
     if (key == 57357) {
-        triangleColor = glm::vec4(1, 1, 1, 1);
+        triangleColor = glm::vec4(1, 1, 1, 0.25);
     }
 
     /* rgb(1,1,0,1) if keypress is left arrow*/
@@ -54,12 +55,7 @@ void determineColor(glm::vec4 triangleColor, int key) {
 
 // update uniform color on keypress
 void ofApp::keyPressed(int key){
-    shader.load("first_vertex.vert", "first_fragment.frag");
-    shader.begin();
-    determineColor(triangleColor, key);
-    shader.setUniform4f("fragCol", triangleColor);
-    triangle.draw();
-    shader.end();
+    determineColor(key);
 }
 
 //--------------------------------------------------------------
