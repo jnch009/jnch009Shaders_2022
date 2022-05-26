@@ -5,6 +5,7 @@
 class ofApp : public ofBaseApp{
 	ofMesh triangle;
 	ofShader shader;
+	glm::vec4 triangleColor;
 
 	public:
 		void setup();
