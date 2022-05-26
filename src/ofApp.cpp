@@ -3,8 +3,6 @@
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 //--------------------------------------------------------------
 
-glm::vec4 triangleColor = glm::vec4(1, 0.25, 1, 0.45);
-
 void ofApp::setup() {
     triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
     triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -31,31 +29,31 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void determineColor(int key) {
+glm::vec4 determineColor(int key) {
     /* rgb(1,0,1,1) if keypress is down arrow*/
     if (key == 57359) {
-        triangleColor = glm::vec4(1, 0, 1, 1);
+        return glm::vec4(1, 0, 1, 1);
     }
 
     /* rgb(1,1,1,0.25) if keypress is up arrow*/
     if (key == 57357) {
-        triangleColor = glm::vec4(1, 1, 1, 0.25);
+        return glm::vec4(1, 1, 1, 0.25);
     }
 
     /* rgb(1,1,0,1) if keypress is left arrow*/
     if (key == 57356) {
-        triangleColor = glm::vec4(1, 1, 0, 1);
+        return glm::vec4(1, 1, 0, 1);
     }
 
     /* rgb(0,1,1,0.5) if keypress is right arrow*/
     if (key == 57358) {
-        triangleColor = glm::vec4(0, 1, 1, 0.5);
+        return glm::vec4(0, 1, 1, 0.5);
     }
 }
 
 // update uniform color on keypress
 void ofApp::keyPressed(int key){
-    determineColor(key);
+    ofApp::updateColor(determineColor(key));
 }
 
 //--------------------------------------------------------------
@@ -106,4 +104,9 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::updateColor(glm::vec4 color) {
+    triangleColor = color;
 }
