@@ -3,6 +3,9 @@
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
+	ofMesh triangle;
+	ofShader shader;
+	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
 
 	public:
 		void setup();

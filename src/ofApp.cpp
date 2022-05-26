@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "utility/utilities.h"
 
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 
@@ -20,24 +21,9 @@ void ofApp::draw(){
     triangle.draw();
 }
 
-//--------------------------------------------------------------
+// update uniform color on keypress
 void ofApp::keyPressed(int key){
-    glm::vec3 curPos = triangle.getVertex(2);
-
-    /* move 20 points upwards if keypress is down arrow*/
-    if (key == 57359) {
-        triangle.setVertex(2, curPos + glm::vec3(0, 20, 0));
-    }
-
-    /* move 20 points downwards if keypress is up arrow*/
-    if (key == 57357) {
-        triangle.setVertex(2, curPos + glm::vec3(0, 20, 0));
-    }
-
-    /* move 20 points left if keypress is left arrow*/
-    if (key == 57356) {
-        triangle.setVertex(2, curPos + glm::vec3(-20, 0, 0));
-    }
+    ofApp::updateColor(utilities::determineColor(key));
 }
 
 //--------------------------------------------------------------
