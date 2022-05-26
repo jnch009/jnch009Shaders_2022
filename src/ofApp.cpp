@@ -2,13 +2,18 @@
 #include "utility/utilities.h"
 
 //IMPORTANT: DO NOT HARDCODE ANYTHING
-
-ofMesh triangle;
 //--------------------------------------------------------------
-void ofApp::setup(){
-    triangle.addVertex(glm::vec3(0.0, 0.0, 0.0));
-    triangle.addVertex(glm::vec3(0.0, 768.0f, 0.0));
-    triangle.addVertex(glm::vec3(1024.0, 768.0, 0.0));
+
+void ofApp::setup() {
+    triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
+    triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
+    triangle.addVertex(glm::vec3(1.0f, -1.0f, 0.0f));
+
+    triangle.addColor(ofFloatColor(1.0f, 0.0f, 0.0f, 1.0f));
+    triangle.addColor(ofFloatColor(0.0f, 1.0f, 0.0f, 1.0f));
+    triangle.addColor(ofFloatColor(0.0f, 0.0f, 1.0f, 1.0f));
+
+    shader.load("first_vertex.vert", "first_fragment.frag");
 }
 
 //--------------------------------------------------------------
@@ -18,7 +23,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    shader.begin();
+    shader.setUniform4f("fragCol", triangleColor);
     triangle.draw();
+    shader.end();
 }
 
 // update uniform color on keypress
@@ -74,4 +82,9 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::updateColor(glm::vec4 color) {
+    triangleColor = color;
 }
