@@ -3,6 +3,9 @@
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
+	ofMesh triangle;
+	ofShader shader;
+	glm::vec4 triangleColor = glm::vec4(1,0,0,1);
 
 	public:
 		void setup();
@@ -20,5 +23,5 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+		void updateColor(glm::vec4 newColor);
 };
