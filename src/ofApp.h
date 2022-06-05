@@ -3,7 +3,7 @@
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
-	ofMesh triangle;
+	ofMesh quad;
 	ofShader shader;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
 

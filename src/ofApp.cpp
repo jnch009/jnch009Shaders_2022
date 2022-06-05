@@ -5,13 +5,18 @@
 //--------------------------------------------------------------
 
 void ofApp::setup() {
-    triangle.addVertex(glm::vec3(-1.0f, 1.0f, 0.0f));
-    triangle.addVertex(glm::vec3(-1.0f, -1.0f, 0.0f));
-    triangle.addVertex(glm::vec3(1.0f, -1.0f, 0.0f));
+    quad.addVertex(glm::vec3(-1, -1, 0));
+    quad.addVertex(glm::vec3(-1, 1, 0));
+    quad.addVertex(glm::vec3(1, 1, 0));
+    quad.addVertex(glm::vec3(1, -1, 0));
 
-    triangle.addColor(ofFloatColor(1.0f, 0.0f, 0.0f, 1.0f));
-    triangle.addColor(ofFloatColor(0.0f, 1.0f, 0.0f, 1.0f));
-    triangle.addColor(ofFloatColor(0.0f, 0.0f, 1.0f, 1.0f));
+    quad.addColor(ofDefaultColorType(1, 0, 0, 1)); //red
+    quad.addColor(ofDefaultColorType(0, 1, 0, 1)); //green
+    quad.addColor(ofDefaultColorType(0, 0, 1, 1)); //blue
+    quad.addColor(ofDefaultColorType(1, 1, 1, 1)); //white
+
+    ofIndexType indices[6] = { 0,1,2,2,3,0 };
+    quad.addIndices(indices, 6);
 
     shader.load("first_vertex.vert", "first_fragment.frag");
 }
