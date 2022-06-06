@@ -30,7 +30,7 @@ void ofApp::update(){
 void ofApp::draw(){
     shader.begin();
     shader.setUniform4f("fragCol", triangleColor);
-    triangle.draw();
+    quad.draw();
     shader.end();
 }
 
