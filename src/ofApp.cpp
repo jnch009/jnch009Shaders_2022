@@ -23,7 +23,8 @@ void ofApp::setup() {
     ofIndexType indices[6] = { 0,1,2,2,3,0 };
     quad.addIndices(indices, 6);
 
-    shader.load("first_vertex.vert", "first_fragment.frag");
+    //shader.load("first_vertex.vert", "first_fragment.frag");
+    shader.load("uv_passthrough.vert", "uv_vis.frag");
 }
 
 //--------------------------------------------------------------
