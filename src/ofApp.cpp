@@ -15,6 +15,11 @@ void ofApp::setup() {
     quad.addColor(ofDefaultColorType(0, 0, 1, 1)); //blue
     quad.addColor(ofDefaultColorType(1, 1, 1, 1)); //white
 
+    quad.addTexCoord(glm::vec2(0, 0)); // black/origin (bottom left)
+    quad.addTexCoord(glm::vec2(0, 1)); // green/top left
+    quad.addTexCoord(glm::vec2(1, 1)); // yellow/top right
+    quad.addTexCoord(glm::vec2(1, 0)); // red/bottom right
+
     ofIndexType indices[6] = { 0,1,2,2,3,0 };
     quad.addIndices(indices, 6);
 
