@@ -18,8 +18,14 @@ void ofApp::setup() {
     ofIndexType indices[6] = { 0,1,2,2,3,0 };
     quad.addIndices(indices, 6);
 
+    // Shaders outputting a colored right triangle
     //shader.load("first_vertex.vert", "first_fragment.frag");
-    shader.load("uv_passthrough.vert", "uv_vis.frag");
+    
+    // Fragment shader outputting UVs as Color Data
+    //shader.load("uv_passthrough.vert", "uv_vis.frag");
+
+    // Fragment shader outputting texture data
+    shader.load("uv_passthrough.vert", "texture.frag");
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();
