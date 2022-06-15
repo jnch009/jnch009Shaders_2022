@@ -25,6 +25,10 @@ void ofApp::setup() {
 
     //shader.load("first_vertex.vert", "first_fragment.frag");
     shader.load("uv_passthrough.vert", "uv_vis.frag");
+
+    // disabling support of pixel coordinates in favor of UV coordinates
+    ofDisableArbTex();
+    img.load("parrot.png");
 }
 
 //--------------------------------------------------------------
