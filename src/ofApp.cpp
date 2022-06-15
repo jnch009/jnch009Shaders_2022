@@ -25,7 +25,10 @@ void ofApp::setup() {
     //shader.load("uv_passthrough.vert", "uv_vis.frag");
 
     // Fragment shader outputting texture data
-    shader.load("uv_passthrough.vert", "texture.frag");
+    /*shader.load("uv_passthrough.vert", "texture.frag");*/
+
+    // Fragment shader outputting texture data, but scrolled
+    shader.load("scrolling_uv.vert", "texture.frag");
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();
