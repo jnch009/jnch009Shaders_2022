@@ -40,6 +40,7 @@ void ofApp::update(){
 void ofApp::draw(){
     shader.begin();
     shader.setUniform4f("fragCol", triangleColor);
+    shader.setUniformTexture("parrotTex", img, 0);
     quad.draw();
     shader.end();
 }
