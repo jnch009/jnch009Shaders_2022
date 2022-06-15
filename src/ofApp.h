@@ -5,6 +5,7 @@
 class ofApp : public ofBaseApp{
 	ofMesh quad;
 	ofShader shader;
+	ofImage img;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
 
 	public:
