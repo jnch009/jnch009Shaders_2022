@@ -10,11 +10,6 @@ void ofApp::setup() {
     quad.addVertex(glm::vec3(1, 1, 0));
     quad.addVertex(glm::vec3(1, -1, 0));
 
-    quad.addColor(ofDefaultColorType(1, 0, 0, 1)); //red
-    quad.addColor(ofDefaultColorType(0, 1, 0, 1)); //green
-    quad.addColor(ofDefaultColorType(0, 0, 1, 1)); //blue
-    quad.addColor(ofDefaultColorType(1, 1, 1, 1)); //white
-
     quad.addTexCoord(glm::vec2(0, 0)); // black/origin (bottom left)
     quad.addTexCoord(glm::vec2(0, 1)); // green/top left
     quad.addTexCoord(glm::vec2(1, 1)); // yellow/top right
