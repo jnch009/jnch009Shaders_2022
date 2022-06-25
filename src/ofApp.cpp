@@ -18,6 +18,8 @@ void ofApp::setup() {
     ofIndexType indices[6] = { 0,1,2,2,3,0 };
     quad.addIndices(indices, 6);
 
+    /*Shaders*/
+
     // Shaders outputting a colored right triangle
     //shader.load("first_vertex.vert", "first_fragment.frag");
     
@@ -29,6 +31,9 @@ void ofApp::setup() {
 
     // Fragment shader outputting texture data, but scrolled
     shader.load("scrolling_uv.vert", "texture.frag");
+
+    // Fragment shader updating the brightness
+    shader.load("scrolling_uv.vert", "brightness.frag");
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();
