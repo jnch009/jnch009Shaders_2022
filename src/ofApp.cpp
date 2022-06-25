@@ -52,6 +52,7 @@ void ofApp::draw(){
     shader.setUniform4f("fragCol", triangleColor);
     shader.setUniformTexture("parrotTex", img, 0);
     shader.setUniform1f("time", ofGetElapsedTimef());
+    shader.setUniform1f("brightness", brightness);
     quad.draw();
     shader.end();
 }
