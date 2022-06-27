@@ -37,6 +37,10 @@ void ofApp::setup() {
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();
+
+    // disable alpha blending
+    ofDisableAlphaBlending();
+
     img.load("parrot.png");
     img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
