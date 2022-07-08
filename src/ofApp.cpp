@@ -30,12 +30,12 @@ void ofApp::setup() {
     ofDisableAlphaBlending();
 
     img.load("parrot.png");
-    img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+    //img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
     img2.load("checker.jpg");
     img2.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
-    loadShader(0);
+    loadShader(4);
 }
 
 //--------------------------------------------------------------
@@ -45,19 +45,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    /*shader.begin();
+    shader.begin();
     shader.setUniform4f("fragCol", triangleColor);
     shader.setUniformTexture("parrotTex", img, 0);
     shader.setUniform1f("time", ofGetElapsedTimef());
     shader.setUniform1f("brightness", 0.5f);
     quad.draw();
-    shader.end();*/
+    shader.end();
 
-    shader.begin();
+    /*shader.begin();
     shader.setUniformTexture("parrotTex", img, 0);
     shader.setUniformTexture("checkerboard", img2, 1);
     quad.draw();
-    shader.end();
+    shader.end();*/
 
     // drawing quadrants
     //shader.begin();
