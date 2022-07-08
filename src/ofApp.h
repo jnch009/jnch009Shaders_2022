@@ -3,9 +3,12 @@
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
-	ofMesh triangle;
+	ofMesh quad;
 	ofShader shader;
+	ofImage img;
+	ofImage img2;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
+	float brightness = 1.0f;
 
 	public:
 		void setup();
@@ -24,4 +27,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void updateColor(glm::vec4 newColor);
+		void setupMesh(ofMesh& mesh, vector<glm::vec3> vertices, vector<glm::vec2> texCoords);
+		void loadShader(int shaderToLoad);
 };

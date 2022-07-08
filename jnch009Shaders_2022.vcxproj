@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -185,6 +185,7 @@
     <ClCompile Include="src\utility\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\meshes\meshData.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\utility\utilities.h" />
   </ItemGroup>
@@ -199,6 +200,20 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\data\brightness.frag" />
+    <None Include="bin\data\colorUV.frag" />
+    <None Include="bin\data\first_fragment.frag" />
+    <None Include="bin\data\first_vertex.vert" />
+    <None Include="bin\data\mix.frag" />
+    <None Include="bin\data\scrolling_uv.vert" />
+    <None Include="bin\data\texture.frag" />
+    <None Include="bin\data\uv_passthrough.vert" />
+    <None Include="bin\data\uv_vis.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bin\data\parrot.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>
