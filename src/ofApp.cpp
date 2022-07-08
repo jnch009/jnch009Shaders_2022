@@ -31,6 +31,10 @@ void ofApp::setup() {
 
     img.load("parrot.png");
     img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+
+    img2.load("checker.jpg");
+    img2.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+
     loadShader(0);
 }
 
@@ -50,30 +54,37 @@ void ofApp::draw(){
     shader.end();*/
 
     shader.begin();
-    shader.setUniform4f("fragCol", triangleColor);
     shader.setUniformTexture("parrotTex", img, 0);
-    shader.setUniform1f("time", ofGetElapsedTimef());
-
-    shader.setUniform1f("brightness", 0.5f);
-    //shader.setUniform4f("uvColor", glm::vec4(-0.5, -0.5, -0.5, 1));
-    shader.setUniform4f("uvMulColor", glm::vec4(-0.5, -0.5, -0.5, 1));
-    topLeft.draw();
-    
-    shader.setUniform1f("brightness", 0.7f);
-    //shader.setUniform4f("uvColor", glm::vec4(0.25, 0.25, 1, 1));
-    shader.setUniform4f("uvMulColor", glm::vec4(0.25, 0.25, 1, 1));
-    topRight.draw();
-    
-    shader.setUniform1f("brightness", 0.2f);
-    //shader.setUniform4f("uvColor", glm::vec4(1, 0, 0, 1));
-    shader.setUniform4f("uvMulColor", glm::vec4(1, 0, 0, 1));
-    bottomLeft.draw();
-    
-    shader.setUniform1f("brightness", 3.0f);
-    //shader.setUniform4f("uvColor", glm::vec4(0.5, 0.5, 0.5, 1));
-    shader.setUniform4f("uvMulColor", glm::vec4(0.5, 0.5, 0.5, 1));
-    bottomRight.draw();
+    shader.setUniformTexture("checkerboard", img2, 1);
+    quad.draw();
     shader.end();
+
+    // drawing quadrants
+    //shader.begin();
+    //shader.setUniform4f("fragCol", triangleColor);
+    //shader.setUniformTexture("parrotTex", img, 0);
+    //shader.setUniform1f("time", ofGetElapsedTimef());
+
+    //shader.setUniform1f("brightness", 0.5f);
+    ////shader.setUniform4f("uvColor", glm::vec4(-0.5, -0.5, -0.5, 1));
+    //shader.setUniform4f("uvMulColor", glm::vec4(-0.5, -0.5, -0.5, 1));
+    //topLeft.draw();
+    //
+    //shader.setUniform1f("brightness", 0.7f);
+    ////shader.setUniform4f("uvColor", glm::vec4(0.25, 0.25, 1, 1));
+    //shader.setUniform4f("uvMulColor", glm::vec4(0.25, 0.25, 1, 1));
+    //topRight.draw();
+    //
+    //shader.setUniform1f("brightness", 0.2f);
+    ////shader.setUniform4f("uvColor", glm::vec4(1, 0, 0, 1));
+    //shader.setUniform4f("uvMulColor", glm::vec4(1, 0, 0, 1));
+    //bottomLeft.draw();
+    //
+    //shader.setUniform1f("brightness", 3.0f);
+    ////shader.setUniform4f("uvColor", glm::vec4(0.5, 0.5, 0.5, 1));
+    //shader.setUniform4f("uvMulColor", glm::vec4(0.5, 0.5, 0.5, 1));
+    //bottomRight.draw();
+    //shader.end();
 }
 
 // update uniform color on keypress
@@ -175,7 +186,10 @@ void ofApp::loadShader(int shaderToLoad) {
         case 6:
             shader.load("uv_passthrough.vert", "brightness.frag");
             break;
-        default:
+        case 7:
             shader.load("uv_passthrough.vert", "colorUV.frag");
+            break;
+        default:
+            shader.load("uv_passthrough.vert", "mix.frag");
     }
 }

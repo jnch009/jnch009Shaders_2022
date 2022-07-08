@@ -49,6 +49,7 @@
     <None Include="bin\data\colorUV.frag" />
     <None Include="bin\data\first_fragment.frag" />
     <None Include="bin\data\first_vertex.vert" />
+    <None Include="bin\data\mix.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="bin\data\parrot.png" />

@@ -6,6 +6,7 @@ class ofApp : public ofBaseApp{
 	ofMesh quad;
 	ofShader shader;
 	ofImage img;
+	ofImage img2;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
 	float brightness = 1.0f;
 

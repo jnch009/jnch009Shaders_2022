@@ -206,6 +206,7 @@
     <None Include="bin\data\colorUV.frag" />
     <None Include="bin\data\first_fragment.frag" />
     <None Include="bin\data\first_vertex.vert" />
+    <None Include="bin\data\mix.frag" />
     <None Include="bin\data\scrolling_uv.vert" />
     <None Include="bin\data\texture.frag" />
     <None Include="bin\data\uv_passthrough.vert" />
