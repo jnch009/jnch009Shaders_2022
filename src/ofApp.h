@@ -8,7 +8,6 @@ class ofApp : public ofBaseApp{
 	ofImage img;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
 	float brightness = 1.0f;
-	int quadrants = 4;
 
 	public:
 		void setup();
@@ -27,4 +26,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void updateColor(glm::vec4 newColor);
+		void setupMesh(ofMesh& mesh, vector<glm::vec3> vertices, vector<glm::vec2> texCoords);
+		void loadShader(int shaderToLoad);
 };
