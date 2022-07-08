@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "utility/utilities.h"
+#include "meshes/meshData.h"
 
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 //--------------------------------------------------------------
@@ -12,51 +13,15 @@ ofMesh bottomLeft;
 ofMesh bottomRight;
 
 void ofApp::setup() {
+    MeshData meshData;
+    vector<glm::vec2> texCoords = meshData.texCoords;
+
     // Don't forget, these can be easily defined in a text file!!!
-    
-    vector<glm::vec2> texCoords = {
-        glm::vec2(0, 0),
-        glm::vec2(0, 1),
-        glm::vec2(1, 1),
-        glm::vec2(1, 0)
-    };
-    
-    //TOP LEFT
-    vector<glm::vec3> vertices = {
-        glm::vec3(-1, 0, 0),
-        glm::vec3(-1, 1, 0),
-        glm::vec3(0, 1, 0),
-        glm::vec3(0, 0, 0)
-    };
-    ofApp::setupMesh(topLeft, vertices, texCoords);
-
-    //TOP RIGHT
-    vertices[0] = glm::vec3(0, 0, 0);
-    vertices[1] = glm::vec3(0, 1, 0);
-    vertices[2] = glm::vec3(1, 1, 0);
-    vertices[3] = glm::vec3(1, 0, 0);
-    ofApp::setupMesh(topRight, vertices, texCoords);
-
-    //BOTTOM LEFT
-    vertices[0] = glm::vec3(-1, -1, 0);
-    vertices[1] = glm::vec3(-1, 0, 0);
-    vertices[2] = glm::vec3(0, 0, 0);
-    vertices[3] = glm::vec3(0, -1, 0);
-    ofApp::setupMesh(bottomLeft, vertices, texCoords);
-
-    //BOTTOM RIGHT
-    vertices[0] = glm::vec3(0, -1, 0);
-    vertices[1] = glm::vec3(0, 0, 0);
-    vertices[2] = glm::vec3(1, 0, 0);
-    vertices[3] = glm::vec3(1, -1, 0);
-    ofApp::setupMesh(bottomRight, vertices, texCoords);
-
-    //Quad
-    vertices[0] = glm::vec3(-1, -1, 0);
-    vertices[1] = glm::vec3(-1, 1, 0);
-    vertices[2] = glm::vec3(1, 1, 0);
-    vertices[3] = glm::vec3(1, -1, 0);
-    ofApp::setupMesh(quad, vertices, texCoords);
+    ofApp::setupMesh(topLeft, meshData.topLeft, texCoords);
+    ofApp::setupMesh(topRight, meshData.topRight, texCoords);
+    ofApp::setupMesh(bottomLeft, meshData.bottomLeft, texCoords);
+    ofApp::setupMesh(bottomRight, meshData.bottomRight, texCoords);
+    ofApp::setupMesh(quad, meshData.quad, texCoords);
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();
@@ -88,21 +53,25 @@ void ofApp::draw(){
     shader.setUniform4f("fragCol", triangleColor);
     shader.setUniformTexture("parrotTex", img, 0);
     shader.setUniform1f("time", ofGetElapsedTimef());
-    
+
     shader.setUniform1f("brightness", 0.5f);
-    shader.setUniform4f("uvColor", glm::vec4(0.5, 0.5, 0.5, 1));
+    //shader.setUniform4f("uvColor", glm::vec4(-0.5, -0.5, -0.5, 1));
+    shader.setUniform4f("uvMulColor", glm::vec4(-0.5, -0.5, -0.5, 1));
     topLeft.draw();
     
     shader.setUniform1f("brightness", 0.7f);
-    shader.setUniform4f("uvColor", glm::vec4(-0.5, -0.5, -0.5, 1));
+    //shader.setUniform4f("uvColor", glm::vec4(0.25, 0.25, 1, 1));
+    shader.setUniform4f("uvMulColor", glm::vec4(0.25, 0.25, 1, 1));
     topRight.draw();
     
     shader.setUniform1f("brightness", 0.2f);
-    shader.setUniform4f("uvColor", glm::vec4(-1, -0.75, -0.5, 1));
+    //shader.setUniform4f("uvColor", glm::vec4(1, 0, 0, 1));
+    shader.setUniform4f("uvMulColor", glm::vec4(1, 0, 0, 1));
     bottomLeft.draw();
     
     shader.setUniform1f("brightness", 3.0f);
-    shader.setUniform4f("uvColor", glm::vec4(1, 1, 1, 1));
+    //shader.setUniform4f("uvColor", glm::vec4(0.5, 0.5, 0.5, 1));
+    shader.setUniform4f("uvMulColor", glm::vec4(0.5, 0.5, 0.5, 1));
     bottomRight.draw();
     shader.end();
 }
@@ -177,6 +146,7 @@ void ofApp::setupMesh(ofMesh& mesh, vector<glm::vec3> vertices, vector<glm::vec2
     // Might not always be 6
     // Keeping this static for now, but it shouldn't be
     // The index buffer will depend on what structure you want
+    // The order of the vertices most likely will be defined in a text file as well
     const int indexSize = 6;
     ofIndexType indices[indexSize] = {
         0,1,2,2,3,0,

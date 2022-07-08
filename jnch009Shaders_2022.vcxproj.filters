@@ -35,6 +35,7 @@
     <ClInclude Include="src\utility\utilities.h">
       <Filter>src\utility</Filter>
     </ClInclude>
+    <ClInclude Include="src\meshes\meshData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
