@@ -4,19 +4,53 @@
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 //--------------------------------------------------------------
 
+//GOAL: Let's create a quadrant
+//1. create a function that will make a quad on demand
+//We need to be able to pass vertices to it
+//You could turn quad into an array of ofMesh (more specifically 4)
+//Then afterwards, create a class that contains an ofMesh, ofImage and brightness value
+
 void ofApp::setup() {
-    quad.addVertex(glm::vec3(-1, -1, 0));
+    // Don't forget, these can be easily defined in a text file!!!
+    //TOP LEFT
+    quad.addVertex(glm::vec3(-1, 0, 0));
     quad.addVertex(glm::vec3(-1, 1, 0));
+    quad.addVertex(glm::vec3(0, 1, 0));
+    quad.addVertex(glm::vec3(0, 0, 0));
+
+    //TOP RIGHT
+    quad.addVertex(glm::vec3(0, 0, 0));
+    quad.addVertex(glm::vec3(0, 1, 0));
     quad.addVertex(glm::vec3(1, 1, 0));
+    quad.addVertex(glm::vec3(1, 0, 0));
+
+    //BOTTOM LEFT
+    quad.addVertex(glm::vec3(-1, -1, 0));
+    quad.addVertex(glm::vec3(-1, 0, 0));
+    quad.addVertex(glm::vec3(0, 0, 0));
+    quad.addVertex(glm::vec3(0, -1, 0));
+
+    //BOTTOM RIGHT
+    quad.addVertex(glm::vec3(0, -1, 0));
+    quad.addVertex(glm::vec3(0, 0, 0));
+    quad.addVertex(glm::vec3(1, 0, 0));
     quad.addVertex(glm::vec3(1, -1, 0));
 
-    quad.addTexCoord(glm::vec2(0, 0)); // black/origin (bottom left)
-    quad.addTexCoord(glm::vec2(0, 1)); // green/top left
-    quad.addTexCoord(glm::vec2(1, 1)); // yellow/top right
-    quad.addTexCoord(glm::vec2(1, 0)); // red/bottom right
+    for (int i = 0; i < quadrants; i++) {
+        quad.addTexCoord(glm::vec2(0, 0)); // black/origin (bottom left)
+        quad.addTexCoord(glm::vec2(0, 1)); // green/top left
+        quad.addTexCoord(glm::vec2(1, 1)); // yellow/top right
+        quad.addTexCoord(glm::vec2(1, 0)); // red/bottom right
+    }
 
-    ofIndexType indices[6] = { 0,1,2,2,3,0 };
-    quad.addIndices(indices, 6);
+    // 4 quads * 6 edges
+    ofIndexType indices[4*6] = { 
+        0,1,2,2,3,0,
+        4,5,6,6,7,4,
+        8,9,10,10,11,8,
+        12,13,14,14,15,12
+    };
+    quad.addIndices(indices, 4*6);
 
     /*Shaders*/
 
@@ -27,13 +61,13 @@ void ofApp::setup() {
     //shader.load("uv_passthrough.vert", "uv_vis.frag");
 
     // Fragment shader outputting texture data
-    /*shader.load("uv_passthrough.vert", "texture.frag");*/
+    shader.load("uv_passthrough.vert", "texture.frag");
 
     // Fragment shader outputting texture data, but scrolled
-    shader.load("scrolling_uv.vert", "texture.frag");
+    //shader.load("scrolling_uv.vert", "texture.frag");
 
     // Fragment shader updating the brightness
-    shader.load("scrolling_uv.vert", "brightness.frag");
+    //shader.load("scrolling_uv.vert", "brightness.frag");
 
     // disabling support of pixel coordinates in favor of UV coordinates
     ofDisableArbTex();

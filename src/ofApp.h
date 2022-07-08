@@ -7,7 +7,8 @@ class ofApp : public ofBaseApp{
 	ofShader shader;
 	ofImage img;
 	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
-	float brightness = 0.25f;
+	float brightness = 1.0f;
+	int quadrants = 4;
 
 	public:
 		void setup();
