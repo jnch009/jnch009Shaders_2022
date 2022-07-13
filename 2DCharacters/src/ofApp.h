@@ -23,6 +23,8 @@ class ofApp : public ofBaseApp{
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 		
 		ofMesh charMesh;
-		ofShader charShader;
+		ofMesh backgroundMesh;
+		ofShader shader;
 		ofImage alienImg;
+		ofImage bgImg;
 };
