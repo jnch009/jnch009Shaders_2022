@@ -2,9 +2,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	buildMesh(charMesh, 0.1, 0.2, glm::vec3(-0.12, -0.24, 0.0));
-	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
 	ofDisableArbTex();
+	ofEnableDepthTest();
+
+	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.24, 0.0));
+	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
 
