@@ -20,6 +20,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 		
 		ofMesh charMesh;
 		ofShader charShader;
