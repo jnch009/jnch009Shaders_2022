@@ -7,11 +7,14 @@ void ofApp::setup(){
 
 	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.24, 0.0));
 	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
+	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(-0.55, 0.0, 0.0));
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
+	cloudShader.load("uv_passthrough.vert", "cloud.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
+	cloudImg.load("cloud.png");
 }
 
 //--------------------------------------------------------------
@@ -25,11 +28,17 @@ void ofApp::draw(){
 
 	shader.setUniformTexture("tex", alienImg, 0);
 	charMesh.draw();
-	
 	shader.setUniformTexture("tex", bgImg, 0);
 	backgroundMesh.draw();
-	
+
 	shader.end();
+
+	cloudShader.begin();
+
+	shader.setUniformTexture("tex", cloudImg, 0);
+	cloudMesh.draw();
+
+	cloudShader.end();
 }
 
 //--------------------------------------------------------------
