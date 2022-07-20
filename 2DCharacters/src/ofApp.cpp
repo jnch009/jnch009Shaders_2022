@@ -11,11 +11,13 @@ void ofApp::setup(){
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
 	cloudShader.load("uv_passthrough.vert", "cloud.frag");
+	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
 	cloudImg.load("cloud.png");
 	sunImg.load("sun.png");
+	alienSprite.load("walk_sheet.png");
 }
 
 //--------------------------------------------------------------
@@ -25,14 +27,26 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	static float frame = 0.0;
+	frame = (frame > 10) ? 0.0 : frame += 0.2;
+	glm::vec2 spriteSize = glm::vec2(0.28, 0.19);
+	glm::vec2 spriteFrame = glm::vec2((int)frame % 3, (int)frame / 3);
+
 	// Blend not needed here because fully opaque/transparent
 	ofDisableBlendMode();
 	// Enable depth testing for opaque mesh
 	ofEnableDepthTest();
-	shader.begin();
 
-	shader.setUniformTexture("tex", alienImg, 0);
+	spritesheetShader.begin();
+	spritesheetShader.setUniform2f("size", spriteSize);
+	spritesheetShader.setUniform2f("offset", spriteFrame);
+	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
 	charMesh.draw();
+	spritesheetShader.end();
+
+	shader.begin();
+	/*shader.setUniformTexture("tex", alienImg, 0);
+	charMesh.draw();*/
 	shader.setUniformTexture("tex", bgImg, 0);
 	backgroundMesh.draw();
 

@@ -29,8 +29,10 @@ class ofApp : public ofBaseApp{
 		
 		ofShader shader;
 		ofShader cloudShader;
+		ofShader spritesheetShader;
 
 		ofImage alienImg;
+		ofImage alienSprite;
 		ofImage bgImg;
 		ofImage cloudImg;
 		ofImage sunImg;
