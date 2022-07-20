@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofDisableArbTex();
-	ofEnableDepthTest();
 
 	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.24, 0.0));
 	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
@@ -28,6 +27,8 @@ void ofApp::update(){
 void ofApp::draw(){
 	// Blend not needed here because fully opaque/transparent
 	ofDisableBlendMode();
+	// Enable depth testing for opaque mesh
+	ofEnableDepthTest();
 	shader.begin();
 
 	shader.setUniformTexture("tex", alienImg, 0);
@@ -37,6 +38,8 @@ void ofApp::draw(){
 
 	shader.end();
 
+	// disable depth testing for translucent meshes
+	ofDisableDepthTest();
 	// Add alpha blending to make cloud translucent
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	cloudShader.begin();
