@@ -44,12 +44,12 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	cloudShader.begin();
 
-	shader.setUniformTexture("tex", cloudImg, 0);
+	cloudShader.setUniformTexture("tex", cloudImg, 0);
 	cloudMesh.draw();
 
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
-	shader.setUniformTexture("tex", sunImg, 0);
+	cloudShader.setUniformTexture("tex", sunImg, 0);
 	sunMesh.draw();
 
 	cloudShader.end();
