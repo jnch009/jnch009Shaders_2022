@@ -8,6 +8,7 @@ void ofApp::setup(){
 	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.24, 0.0));
 	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
 	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(-0.55, 0.0, 0.0));
+	buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
 	cloudShader.load("uv_passthrough.vert", "cloud.frag");
@@ -15,6 +16,7 @@ void ofApp::setup(){
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
 	cloudImg.load("cloud.png");
+	sunImg.load("sun.png");
 }
 
 //--------------------------------------------------------------
@@ -24,6 +26,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	// Blend not needed here because fully opaque/transparent
+	ofDisableBlendMode();
 	shader.begin();
 
 	shader.setUniformTexture("tex", alienImg, 0);
@@ -33,10 +37,17 @@ void ofApp::draw(){
 
 	shader.end();
 
+	// Add alpha blending to make cloud translucent
+	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	cloudShader.begin();
 
 	shader.setUniformTexture("tex", cloudImg, 0);
 	cloudMesh.draw();
+
+	// Add additive blending for sun
+	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+	shader.setUniformTexture("tex", sunImg, 0);
+	sunMesh.draw();
 
 	cloudShader.end();
 }
