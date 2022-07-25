@@ -29,11 +29,22 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	static float frame = 11;
+	static int wait = 0;
+	static int waitFor = 100;
 	/* stops at frame 10 because the offset becomes: vec2(1, 3)
 	* frame 9.8 becomes: vec2(0, 3)
 	*/
 
-	frame = (frame > 16) ? 11.0 : frame += 0.1;
+	if (frame > 15.0) {
+		wait++;
+		if (wait > waitFor) {
+			wait = 0;
+			frame = 11.0;
+		}
+	}
+	else {
+		frame += 0.06;
+	}
 
 	//row 0
 	//glm::vec2 spriteSize = glm::vec2(0.04, 0.08);
@@ -62,7 +73,7 @@ void ofApp::draw(){
 	// (15, 10.5) x axis needs to be fixed = (0.056, 0.085)
 	// (0.057, 0.085) otherwise
 
-	glm::vec2 currentFrame = glm::vec2(15, 10.5);
+	//glm::vec2 currentFrame = glm::vec2(15, 10.5);
 
 	// Blend not needed here because fully opaque/transparent
 	ofDisableBlendMode();
