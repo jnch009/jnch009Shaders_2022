@@ -30,7 +30,7 @@ void ofApp::setup() {
     ofDisableAlphaBlending();
 
     img.load("parrot.png");
-    img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+    //img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
     img2.load("checker.jpg");
     img2.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
