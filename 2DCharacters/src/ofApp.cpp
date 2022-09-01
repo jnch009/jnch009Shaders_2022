@@ -4,7 +4,7 @@
 void ofApp::setup(){
 	ofDisableArbTex();
 
-	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.2, 0.0));
+	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
 	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
 	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(-0.55, 0.0, 0.0));
 	buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
@@ -17,8 +17,7 @@ void ofApp::setup(){
 	bgImg.load("forest.png");
 	cloudImg.load("cloud.png");
 	sunImg.load("sun.png");
-	//alienSprite.load("walk_sheet.png");
-	alienSprite.load("18_sheet2.png");
+	alienSprite.load("walk_sheet.png");
 }
 
 //--------------------------------------------------------------
@@ -28,52 +27,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	static float frame = 11;
-	static int wait = 0;
-	static int waitFor = 100;
-	/* stops at frame 10 because the offset becomes: vec2(1, 3)
-	* frame 9.8 becomes: vec2(0, 3)
-	*/
-
-	if (frame > 15.0) {
-		wait++;
-		if (wait > waitFor) {
-			wait = 0;
-			frame = 11.0;
-		}
-	}
-	else {
-		frame += 0.06;
-	}
-
-	//row 0
-	//glm::vec2 spriteSize = glm::vec2(0.04, 0.08);
-
-	//row 1
-	//glm::vec2 spriteSize = glm::vec2(0.056, 0.08);
-
-	// alien
-	//glm::vec2 spriteSize = glm::vec2(0.28, 0.19);
-
-	// in progress
-	glm::vec2 spriteSize = glm::vec2(0.057, 0.085);
-
-	if (floor(frame) == 14.0) {
-		spriteSize = glm::vec2(0.0565, 0.085);
-	}
-	else if (floor(frame) == 15.0) {
-		spriteSize = glm::vec2(0.056, 0.085);
-	}
-
-	//glm::vec2 spriteFrame = glm::vec2((int)frame % 5, (int)frame / 5);
-	//glm::vec2 spriteFrame = glm::vec2((int)frame % 3, (int)frame / 3);
-	glm::vec2 spriteFrame = glm::vec2((int)frame % 16, 10.5);
-
-	//NOTE: (14, 10.5) needs to be fixed on x-axis = (0.0565, 0.085)
-	// (15, 10.5) x axis needs to be fixed = (0.056, 0.085)
-	// (0.057, 0.085) otherwise
-
-	//glm::vec2 currentFrame = glm::vec2(15, 10.5);
+	static float frame = 0.0;
+	frame = (frame > 10) ? 0.0 : frame += 0.3;
+	glm::vec2 spriteSize = glm::vec2(0.28, 0.19);
+	glm::vec2 spriteFrame = glm::vec2((int)frame % 3, (int)frame / 3);
 
 	// Blend not needed here because fully opaque/transparent
 	ofDisableBlendMode();
@@ -83,14 +40,15 @@ void ofApp::draw(){
 	spritesheetShader.begin();
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
-	//spritesheetShader.setUniform2f("offset", currentFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
 	charMesh.draw();
 	spritesheetShader.end();
 
 	shader.begin();
+	// used for the static alien image
 	/*shader.setUniformTexture("tex", alienImg, 0);
 	charMesh.draw();*/
+
 	shader.setUniformTexture("tex", bgImg, 0);
 	backgroundMesh.draw();
 
