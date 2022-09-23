@@ -71,15 +71,25 @@ void ofApp::draw(){
 
 	// matrices
 	using namespace glm;
-	mat4 transformA = Func.buildMatrix(vec3(-0.55, 0, 0), 0, vec3(1.5, 1, 1));
-	mat4 transformB = Func.buildMatrix(vec3(0.4, 0.2, 0), 1.0f, vec3(1, 1, 1));
+	static float rotation = 1.0f;
+	rotation += 1.0f * ofGetLastFrameTime();
+	mat4 translationA = translate(vec3(-0.55, 0, 0));
+	mat4 scaleA = scale(vec3(1.5, 1, 1));
+	mat4 rotationA = rotate(0.0f, vec3(0,0,1));
+	mat4 transformA = translationA * rotationA * scaleA;
+	/*-----------------------------------------------------------------------*/
+	mat4 ourRotation = rotate(rotation, vec3(0, 0, 1));
+	mat4 newMatrix = translationA * ourRotation * inverse(transformA);
+	/*-----------------------------------------------------------------------*/
+	mat4 finalMatrixA = newMatrix * transformA;
 
+	mat4 transformB = Func.buildMatrix(vec3(0.4, 0.2, 0), 1.0f, vec3(1, 1, 1));
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
 
 	// cloud transformation matrix A
-	cloudShader.setUniformMatrix4f("transform", transformA);
+	cloudShader.setUniformMatrix4f("transform", finalMatrixA);
 	cloudMesh.draw();
 
 	// cloud transformation matrix B

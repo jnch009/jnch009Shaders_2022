@@ -7,6 +7,7 @@ glm::mat4 functions::buildMatrix(glm::vec3 trans, float rot, glm::vec3 scale)
 	mat4 translation = glm::translate(trans);
 	mat4 rotation = glm::rotate(rot, glm::vec3(0.0, 0.0, 1.0));
 	mat4 scaler = glm::scale(scale);
+	// by default GLM uses column major so we have to multiply in reverse order
 	return translation * rotation * scaler;
 }
 
