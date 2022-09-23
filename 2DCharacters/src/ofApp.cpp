@@ -12,6 +12,7 @@ void ofApp::setup(){
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
 	cloudShader.load("cloudVert.vert", "cloud.frag");
 	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
+	sunShader.load("uv_passthrough.vert", "cloud.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
@@ -73,13 +74,16 @@ void ofApp::draw(){
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
 	cloudMesh.draw();
+	cloudShader.end();
 
+	sunShader.begin();
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
 	cloudShader.setUniformTexture("tex", sunImg, 0);
 	sunMesh.draw();
+	sunShader.end();
 
-	cloudShader.end();
+	
 }
 
 //--------------------------------------------------------------
