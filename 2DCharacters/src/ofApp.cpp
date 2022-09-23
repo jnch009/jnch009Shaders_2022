@@ -22,10 +22,13 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	float speed = 0.4 * ofGetLastFrameTime();
 	if (walkRight)
 	{
-		float speed = 0.4 * ofGetLastFrameTime();
 		charPos += glm::vec3(speed, 0, 0);
+	}
+	else if (walkLeft) {
+		charPos -= glm::vec3(speed, 0, 0);
 	}
 }
 
@@ -81,12 +84,20 @@ void ofApp::keyPressed(int key){
 	if (key == ofKey::OF_KEY_RIGHT) {
 		walkRight = true;
 	}
+
+	else if (key == ofKey::OF_KEY_LEFT) {
+		walkLeft = true;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 	if (key == ofKey::OF_KEY_RIGHT) {
 		walkRight = false;
+	}
+
+	else if (key == ofKey::OF_KEY_LEFT) {
+		walkLeft = false;
 	}
 }
 
