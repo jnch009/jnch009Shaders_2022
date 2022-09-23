@@ -69,10 +69,16 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	cloudShader.begin();
 	//cloud vertex shader
-	cloudShader.setUniform3f("scale", glm::vec3(0.5, 0.75, 1.0));
+	cloudShader.setUniform3f("scale", glm::vec3(1.5, 1.0, 1.0));
+	cloudShader.setUniform1f("rotation", 0.0f);
 	cloudShader.setUniform3f("translation", glm::vec3(-0.55, 0.0, 0.0));
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
+	cloudMesh.draw();
+
+	cloudShader.setUniform3f("scale", glm::vec3(1, 1, 1));
+	cloudShader.setUniform1f("rotation", 1.0f);
+	cloudShader.setUniform3f("translation", glm::vec3(0.4, 0.2, 0.0));
 	cloudMesh.draw();
 	cloudShader.end();
 
