@@ -73,7 +73,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	int numVerts = charMesh.getNumVertices();
+	for (int i = 0; i < numVerts; ++i)
+	{
+		charMesh.setVertex(i, charMesh.getVertex(i) + glm::vec3(0.2f, 0.0f, 0.0f));
+	}
 }
 
 //--------------------------------------------------------------
