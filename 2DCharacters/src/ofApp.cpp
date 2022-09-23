@@ -1,13 +1,14 @@
 #include "ofApp.h"
+#include "functions.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofDisableArbTex();
 
-	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
-	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
-	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
-	buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
+	Func.buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
+	Func.buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
+	Func.buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
+	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
 	cloudShader.load("cloudVert.vert", "cloud.frag");
@@ -160,21 +161,3 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 //--------------------------------------------------------------
-void ofApp::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos)
-{
-	float verts[] = { -w + pos.x, -h + pos.y, pos.z,
-		-w + pos.x, h + pos.y, pos.z,
-		w + pos.x, h + pos.y, pos.z,
-		w + pos.x, -h + pos.y, pos.z };
-
-	float uvs[] = { 0,0, 0,1, 1,1, 1,0 };
-	for (int i = 0; i < 4; ++i) {
-		int idx = i * 3;
-		int uvIdx = i * 2;
-		mesh.addVertex(glm::vec3(verts[idx], verts[idx + 1], verts[idx + 2]));
-		mesh.addTexCoord(glm::vec2(uvs[uvIdx], uvs[uvIdx + 1]));
-	}
-
-	ofIndexType indices[6] = { 0,1,2,2,3,0 };
-	mesh.addIndices(indices, 6);
-}
