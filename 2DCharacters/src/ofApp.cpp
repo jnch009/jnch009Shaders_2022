@@ -76,11 +76,14 @@ void ofApp::draw(){
 	mat4 translationA = translate(vec3(-0.55, 0, 0));
 	mat4 scaleA = scale(vec3(1.5, 1, 1));
 	mat4 rotationA = rotate(0.0f, vec3(0,0,1));
+	// scale -> rotate -> translate
 	mat4 transformA = translationA * rotationA * scaleA;
 	/*-----------------------------------------------------------------------*/
 	mat4 ourRotation = rotate(rotation, vec3(0, 0, 1));
+	// inverse -> rotate -> translate
 	mat4 newMatrix = translationA * ourRotation * inverse(transformA);
 	/*-----------------------------------------------------------------------*/
+	// scale -> rotate -> translate -> inverse -> rotate -> translate
 	mat4 finalMatrixA = newMatrix * transformA;
 
 	mat4 transformB = Func.buildMatrix(vec3(0.4, 0.2, 0), 1.0f, vec3(1, 1, 1));
