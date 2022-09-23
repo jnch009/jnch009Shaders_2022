@@ -6,11 +6,11 @@ void ofApp::setup(){
 
 	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
 	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
-	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(-0.55, 0.0, 0.0));
+	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
 	buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
 	shader.load("uv_passthrough.vert", "alphaTest.frag");
-	cloudShader.load("uv_passthrough.vert", "cloud.frag");
+	cloudShader.load("cloudVert.vert", "cloud.frag");
 	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
 
 	alienImg.load("alien.png");
@@ -67,7 +67,10 @@ void ofApp::draw(){
 	// Add alpha blending to make cloud translucent
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	cloudShader.begin();
-
+	//cloud vertex shader
+	cloudShader.setUniform3f("scale", glm::vec3(0.5, 0.75, 1.0));
+	cloudShader.setUniform3f("translation", glm::vec3(-0.55, 0.0, 0.0));
+	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
 	cloudMesh.draw();
 

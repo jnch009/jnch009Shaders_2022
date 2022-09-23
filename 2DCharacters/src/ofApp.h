@@ -40,4 +40,7 @@ class ofApp : public ofBaseApp{
 		bool walkRight;
 		bool walkLeft;
 		glm::vec3 charPos;
+
+		glm::vec3 cloudScale;
+		glm::vec3 cloudPos;
 };
