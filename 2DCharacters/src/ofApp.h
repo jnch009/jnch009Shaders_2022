@@ -36,4 +36,7 @@ class ofApp : public ofBaseApp{
 		ofImage bgImg;
 		ofImage cloudImg;
 		ofImage sunImg;
+
+		bool walkRight;
+		glm::vec3 charPos;
 };
