@@ -13,12 +13,18 @@
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\dataStructures">
+      <UniqueIdentifier>{d78fefca-f295-4670-8cf0-0c2bc922c2fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\functions.h" />
+    <ClInclude Include="src\Transformation.h">
+      <Filter>src\dataStructures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

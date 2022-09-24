@@ -1,5 +1,17 @@
 #include "functions.h"
 #include "ofMain.h"
+#include "Transformation.h"
+
+glm::mat4 functions::updateTransformation(glm::vec3 t, float r, glm::vec3 s, Transformation transformation) {
+	using glm::mat4;
+	mat4 scale = glm::scale(s);
+	mat4 rotate = glm::rotate(r, vec3(0, 0, 1));
+	mat4 translate = glm::translate(s);
+	mat4 initialTransform = translate * rotate * scale;
+	mat4 finalTransform = transformation.getTranslate() * transformation.getRotate() * transformation.getScale();
+	//Multiplying a matrix by its' inverse ALWAYS creates the identity matrix
+	return initialTransform * inverse(initialTransform) * finalTransform;
+}
 
 glm::mat4 functions::buildMatrix(glm::vec3 trans, float rot, glm::vec3 scale)
 {

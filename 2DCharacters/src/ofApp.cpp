@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "functions.h"
+#include "Transformation.h"
 using namespace glm;
 
 //--------------------------------------------------------------
@@ -26,10 +27,11 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	float speed = 0.4 * ofGetLastFrameTime();
-	glm::mat4 charScale = scale(glm::vec3(1, 1, 1));
-	glm::mat4 charRotate = rotate(0.0f, vec3(0, 0, 1));
-	glm::mat4 charTranslate = translate(charPos);
-	glm::mat4 initialTransform = charTranslate * charRotate * charScale;
+	Transformation transformation;
+	glm::vec3 charScale = glm::vec3(1, 1, 1);
+	float charRotate = 0.0f;
+	glm::vec3 charTranslate = charPos;
+
 	if (walkRight)
 	{
 		charPos += glm::vec3(speed, 0, 0);
@@ -37,7 +39,8 @@ void ofApp::update(){
 		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
 		
 		// Hard way:
-		charTransform = translate(charPos) * inverse(initialTransform) * initialTransform;
+		transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
@@ -45,7 +48,8 @@ void ofApp::update(){
 		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
 		
 		//Hard way:
-		charTransform = translate(charPos) * inverse(initialTransform) * initialTransform;
+		transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
 	}
 }
 
@@ -86,28 +90,26 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 
 	// matrices
+	Transformation transformationA;
+	vec3 translationA = vec3(-0.55, 0, 0);
+	vec3 scaleA = vec3(1.5, 1, 1);
+	float rotationA = 0.0f;
+	transformationA.setTranslate(translationA);
+	transformationA.setScale(scaleA);
+	transformationA.setRotate(rotationA);
+
 	static float rotation = 1.0f;
 	rotation += 1.0f * ofGetLastFrameTime();
-	mat4 translationA = translate(vec3(-0.55, 0, 0));
-	mat4 scaleA = scale(vec3(1.5, 1, 1));
-	mat4 rotationA = rotate(0.0f, vec3(0,0,1));
-	// scale -> rotate -> translate
-	mat4 transformA = translationA * rotationA * scaleA;
-	/*-----------------------------------------------------------------------*/
-	mat4 ourRotation = rotate(rotation, vec3(0, 0, 1));
-	// inverse -> rotate -> translate
-	mat4 newMatrix = translationA * ourRotation * inverse(transformA);
-	/*-----------------------------------------------------------------------*/
-	// scale -> rotate -> translate -> inverse -> rotate -> translate
-	mat4 finalMatrixA = newMatrix * transformA;
+	transformationA.setRotate(rotation);
 
-	mat4 transformB = Func.buildMatrix(vec3(0.4, 0.2, 0), 1.0f, vec3(1, 1, 1));
+	mat4 transformB = Func.buildMatrix(vec3(0.7, 0.8, 0), 0.5f, vec3(1, 1, 1));
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
 
 	// cloud transformation matrix A
-	cloudShader.setUniformMatrix4f("transform", finalMatrixA);
+	cloudShader.setUniformMatrix4f("transform", 
+		Func.updateTransformation(translationA, rotationA, scaleA, transformationA));
 	cloudMesh.draw();
 
 	// cloud transformation matrix B
