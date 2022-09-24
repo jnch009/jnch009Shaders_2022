@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "functions.h"
+using namespace glm;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -50,7 +51,7 @@ void ofApp::draw(){
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
-	spritesheetShader.setUniform3f("translation", charPos);
+	spritesheetShader.setUniformMatrix4f("transform", mat4());
 	charMesh.draw();
 	spritesheetShader.end();
 
@@ -60,7 +61,7 @@ void ofApp::draw(){
 	charMesh.draw();*/
 
 	shader.setUniformTexture("tex", bgImg, 0);
-	shader.setUniformMatrix4f("transform", glm::mat4());
+	shader.setUniformMatrix4f("transform", mat4());
 	backgroundMesh.draw();
 
 	shader.end();
@@ -71,7 +72,6 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 
 	// matrices
-	using namespace glm;
 	static float rotation = 1.0f;
 	rotation += 1.0f * ofGetLastFrameTime();
 	mat4 translationA = translate(vec3(-0.55, 0, 0));
@@ -105,7 +105,7 @@ void ofApp::draw(){
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
 	sunShader.setUniformTexture("tex", sunImg, 0);
-	sunShader.setUniformMatrix4f("transform", glm::mat4());
+	sunShader.setUniformMatrix4f("transform", mat4());
 	sunMesh.draw();
 	sunShader.end();
 }
