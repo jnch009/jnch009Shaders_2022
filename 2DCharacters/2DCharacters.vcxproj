@@ -204,8 +204,15 @@
   <ItemGroup>
     <None Include="bin\data\alphaTest.frag" />
     <None Include="bin\data\cloud.frag" />
-    <None Include="bin\data\cloudVert.vert" />
+    <None Include="bin\data\general.vert" />
     <None Include="bin\data\spritesheet.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bin\data\alien.png" />
+    <Image Include="bin\data\cloud.png" />
+    <Image Include="bin\data\forest.png" />
+    <Image Include="bin\data\sun.png" />
+    <Image Include="bin\data\walk_sheet.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

@@ -12,10 +12,10 @@ void ofApp::setup(){
 	Func.buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
 	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
-	shader.load("cloudVert.vert", "alphaTest.frag");
-	cloudShader.load("cloudVert.vert", "cloud.frag");
+	shader.load("general.vert", "alphaTest.frag");
+	cloudShader.load("general.vert", "cloud.frag");
 	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
-	sunShader.load("cloudVert.vert", "cloud.frag");
+	sunShader.load("general.vert", "cloud.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
