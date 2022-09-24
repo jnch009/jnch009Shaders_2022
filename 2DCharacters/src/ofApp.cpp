@@ -29,9 +29,11 @@ void ofApp::update(){
 	if (walkRight)
 	{
 		charPos += glm::vec3(speed, 0, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
 	}
 }
 
@@ -51,7 +53,7 @@ void ofApp::draw(){
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
-	spritesheetShader.setUniformMatrix4f("transform", mat4());
+	spritesheetShader.setUniformMatrix4f("transform", charTransform);
 	charMesh.draw();
 	spritesheetShader.end();
 
