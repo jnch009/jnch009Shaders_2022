@@ -7,24 +7,39 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\functions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dataStructures">
+      <UniqueIdentifier>{d78fefca-f295-4670-8cf0-0c2bc922c2fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\functions.h" />
+    <ClInclude Include="src\Transformation.h">
+      <Filter>src\dataStructures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\data\uv_passthrough.vert" />
     <None Include="bin\data\alphaTest.frag" />
     <None Include="bin\data\cloud.frag" />
     <None Include="bin\data\spritesheet.vert" />
+    <None Include="bin\data\general.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bin\data\alien.png" />
+    <Image Include="bin\data\cloud.png" />
+    <Image Include="bin\data\forest.png" />
+    <Image Include="bin\data\sun.png" />
+    <Image Include="bin\data\walk_sheet.png" />
   </ItemGroup>
 </Project>

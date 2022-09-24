@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "functions.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,8 +21,9 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 		
+		functions Func;
+
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
 		ofMesh cloudMesh;
@@ -30,10 +32,16 @@ class ofApp : public ofBaseApp{
 		ofShader shader;
 		ofShader cloudShader;
 		ofShader spritesheetShader;
+		ofShader sunShader;
 
 		ofImage alienImg;
 		ofImage alienSprite;
 		ofImage bgImg;
 		ofImage cloudImg;
 		ofImage sunImg;
+
+		bool walkRight;
+		bool walkLeft;
+		glm::vec3 charPos;
+		glm::mat4 charTransform;
 };
