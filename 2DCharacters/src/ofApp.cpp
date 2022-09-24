@@ -26,14 +26,26 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	float speed = 0.4 * ofGetLastFrameTime();
+	glm::mat4 charScale = scale(glm::vec3(1, 1, 1));
+	glm::mat4 charRotate = rotate(0.0f, vec3(0, 0, 1));
+	glm::mat4 charTranslate = translate(charPos);
+	glm::mat4 initialTransform = charTranslate * charRotate * charScale;
 	if (walkRight)
 	{
 		charPos += glm::vec3(speed, 0, 0);
-		charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		// Easy way:
+		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		
+		// Hard way:
+		charTransform = translate(charPos) * inverse(initialTransform) * initialTransform;
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
-		charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		//Easy way:
+		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		
+		//Hard way:
+		charTransform = translate(charPos) * inverse(initialTransform) * initialTransform;
 	}
 }
 
