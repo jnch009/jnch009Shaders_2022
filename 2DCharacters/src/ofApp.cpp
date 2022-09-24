@@ -1,17 +1,21 @@
 #include "ofApp.h"
+#include "functions.h"
+#include "Transformation.h"
+using namespace glm;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofDisableArbTex();
 
-	buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
-	buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
-	buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(-0.55, 0.0, 0.0));
-	buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
+	Func.buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
+	Func.buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
+	Func.buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
+	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
-	shader.load("uv_passthrough.vert", "alphaTest.frag");
-	cloudShader.load("uv_passthrough.vert", "cloud.frag");
+	shader.load("general.vert", "alphaTest.frag");
+	cloudShader.load("general.vert", "cloud.frag");
 	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
+	sunShader.load("general.vert", "cloud.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
@@ -22,7 +26,31 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	float speed = 0.4 * ofGetLastFrameTime();
+	Transformation transformation;
+	glm::vec3 charScale = glm::vec3(1, 1, 1);
+	float charRotate = 0.0f;
+	glm::vec3 charTranslate = charPos;
 
+	if (walkRight)
+	{
+		charPos += glm::vec3(speed, 0, 0);
+		// Easy way:
+		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		
+		// Hard way:
+		transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
+	}
+	else if (walkLeft) {
+		charPos -= glm::vec3(speed, 0, 0);
+		//Easy way:
+		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		
+		//Hard way:
+		transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
+	}
 }
 
 //--------------------------------------------------------------
@@ -41,6 +69,7 @@ void ofApp::draw(){
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
+	spritesheetShader.setUniformMatrix4f("transform", charTransform);
 	charMesh.draw();
 	spritesheetShader.end();
 
@@ -50,6 +79,7 @@ void ofApp::draw(){
 	charMesh.draw();*/
 
 	shader.setUniformTexture("tex", bgImg, 0);
+	shader.setUniformMatrix4f("transform", mat4());
 	backgroundMesh.draw();
 
 	shader.end();
@@ -58,27 +88,64 @@ void ofApp::draw(){
 	ofDisableDepthTest();
 	// Add alpha blending to make cloud translucent
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
-	cloudShader.begin();
 
+	// matrices
+	Transformation transformationA;
+	vec3 translationA = vec3(-0.55, 0, 0);
+	vec3 scaleA = vec3(1.5, 1, 1);
+	float rotationA = 0.0f;
+	transformationA.setTranslate(translationA);
+	transformationA.setScale(scaleA);
+	transformationA.setRotate(rotationA);
+
+	static float rotation = 1.0f;
+	rotation += 1.0f * ofGetLastFrameTime();
+	transformationA.setRotate(rotation);
+
+	mat4 transformB = Func.buildMatrix(vec3(0.7, 0.8, 0), 0.5f, vec3(1, 1, 1));
+	cloudShader.begin();
+	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
+
+	// cloud transformation matrix A
+	cloudShader.setUniformMatrix4f("transform", 
+		Func.updateTransformation(translationA, rotationA, scaleA, transformationA));
 	cloudMesh.draw();
 
+	// cloud transformation matrix B
+	cloudShader.setUniformMatrix4f("transform", transformB);
+	cloudMesh.draw();
+	cloudShader.end();
+
+	sunShader.begin();
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
-	cloudShader.setUniformTexture("tex", sunImg, 0);
+	sunShader.setUniformTexture("tex", sunImg, 0);
+	sunShader.setUniformMatrix4f("transform", mat4());
 	sunMesh.draw();
-
-	cloudShader.end();
+	sunShader.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	if (key == ofKey::OF_KEY_RIGHT) {
+		walkRight = true;
+	}
 
+	else if (key == ofKey::OF_KEY_LEFT) {
+		walkLeft = true;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+	if (key == ofKey::OF_KEY_RIGHT) {
+		walkRight = false;
+	}
 
+	else if (key == ofKey::OF_KEY_LEFT) {
+		walkLeft = false;
+	}
 }
 
 //--------------------------------------------------------------
@@ -127,21 +194,3 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 //--------------------------------------------------------------
-void ofApp::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos)
-{
-	float verts[] = { -w + pos.x, -h + pos.y, pos.z,
-		-w + pos.x, h + pos.y, pos.z,
-		w + pos.x, h + pos.y, pos.z,
-		w + pos.x, -h + pos.y, pos.z };
-
-	float uvs[] = { 0,0, 0,1, 1,1, 1,0 };
-	for (int i = 0; i < 4; ++i) {
-		int idx = i * 3;
-		int uvIdx = i * 2;
-		mesh.addVertex(glm::vec3(verts[idx], verts[idx + 1], verts[idx + 2]));
-		mesh.addTexCoord(glm::vec2(uvs[uvIdx], uvs[uvIdx + 1]));
-	}
-
-	ofIndexType indices[6] = { 0,1,2,2,3,0 };
-	mesh.addIndices(indices, 6);
-}

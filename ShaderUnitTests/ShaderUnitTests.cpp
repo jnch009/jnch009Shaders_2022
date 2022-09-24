@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "ofMain.h"
 #include "../../jnch009Shaders_2022/src/utility/utilities.h";
 #include "../../jnch009Shaders_2022/src/utility/utilities.cpp";
-#include "../../../of_v0.10.0_vs2017_release/libs/glm/include/glm/vec4.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
