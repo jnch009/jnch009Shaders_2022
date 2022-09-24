@@ -10,10 +10,10 @@ void ofApp::setup(){
 	Func.buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
 	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
 
-	shader.load("uv_passthrough.vert", "alphaTest.frag");
+	shader.load("cloudVert.vert", "alphaTest.frag");
 	cloudShader.load("cloudVert.vert", "cloud.frag");
 	spritesheetShader.load("spritesheet.vert", "alphaTest.frag");
-	sunShader.load("uv_passthrough.vert", "cloud.frag");
+	sunShader.load("cloudVert.vert", "cloud.frag");
 
 	alienImg.load("alien.png");
 	bgImg.load("forest.png");
@@ -60,6 +60,7 @@ void ofApp::draw(){
 	charMesh.draw();*/
 
 	shader.setUniformTexture("tex", bgImg, 0);
+	shader.setUniformMatrix4f("transform", glm::mat4());
 	backgroundMesh.draw();
 
 	shader.end();
@@ -103,11 +104,10 @@ void ofApp::draw(){
 	sunShader.begin();
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
-	cloudShader.setUniformTexture("tex", sunImg, 0);
+	sunShader.setUniformTexture("tex", sunImg, 0);
+	sunShader.setUniformMatrix4f("transform", glm::mat4());
 	sunMesh.draw();
 	sunShader.end();
-
-	
 }
 
 //--------------------------------------------------------------

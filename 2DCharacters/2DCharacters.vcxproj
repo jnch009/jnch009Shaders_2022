@@ -205,7 +205,6 @@
     <None Include="bin\data\cloud.frag" />
     <None Include="bin\data\cloudVert.vert" />
     <None Include="bin\data\spritesheet.vert" />
-    <None Include="bin\data\uv_passthrough.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>
