@@ -30,12 +30,12 @@ void ofApp::setup() {
     ofDisableAlphaBlending();
 
     img.load("parrot.png");
-    //img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
+    img.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
     img2.load("checker.jpg");
     img2.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
-    loadShader(0);
+    loadShader(4);
 }
 
 //--------------------------------------------------------------
@@ -60,10 +60,10 @@ void ofApp::draw(){
     shader.end();
 
     // drawing quadrants
-    //shader.begin();
-    //shader.setUniform4f("fragCol", triangleColor);
-    //shader.setUniformTexture("parrotTex", img, 0);
-    //shader.setUniform1f("time", ofGetElapsedTimef());
+    shader.begin();
+    shader.setUniform4f("fragCol", triangleColor);
+    shader.setUniformTexture("parrotTex", img, 0);
+    shader.setUniform1f("time", ofGetElapsedTimef());
 
     //shader.setUniform1f("brightness", 0.5f);
     ////shader.setUniform4f("uvColor", glm::vec4(-0.5, -0.5, -0.5, 1));
@@ -84,7 +84,7 @@ void ofApp::draw(){
     ////shader.setUniform4f("uvColor", glm::vec4(0.5, 0.5, 0.5, 1));
     //shader.setUniform4f("uvMulColor", glm::vec4(0.5, 0.5, 0.5, 1));
     //bottomRight.draw();
-    //shader.end();
+    shader.end();
 }
 
 // update uniform color on keypress
