@@ -1,6 +1,7 @@
 #include "functions.h"
 #include "ofMain.h"
 #include "Transformation.h"
+#include "structs.h"
 
 glm::mat4 functions::updateTransformation(glm::vec3 t, float r, glm::vec3 s, Transformation transformation) {
 	using glm::mat4;
@@ -40,4 +41,10 @@ void functions::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos)
 
 	ofIndexType indices[6] = { 0,1,2,2,3,0 };
 	mesh.addIndices(indices, 6);
+}
+
+glm::mat4 functions::buildViewMatrix(CameraData cam)
+{
+	using namespace glm;
+	return inverse(buildMatrix(cam.position, cam.rotation, vec3(1, 1, 1)));
 }

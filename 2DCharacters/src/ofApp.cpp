@@ -65,11 +65,15 @@ void ofApp::draw(){
 	// Enable depth testing for opaque mesh
 	ofEnableDepthTest();
 
+	cam.position = vec3(-1, 0, 0);
+	mat4 view = Func.buildViewMatrix(cam);
+
 	spritesheetShader.begin();
+	spritesheetShader.setUniformMatrix4f("view", view);
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
-	spritesheetShader.setUniformMatrix4f("transform", charTransform);
+	spritesheetShader.setUniformMatrix4f("model", charTransform);
 	charMesh.draw();
 	spritesheetShader.end();
 
