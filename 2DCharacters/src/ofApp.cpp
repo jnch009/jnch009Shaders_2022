@@ -84,6 +84,10 @@ void ofApp::draw(){
 
 	shader.setUniformTexture("tex", bgImg, 0);
 	shader.setUniformMatrix4f("transform", mat4());
+	// The bg moves to the middle because it initially starts at
+	// x-coordinate -1. Moving the camera by 1 means -1+1 = 0 (middle)
+	// I thought for some reason it would move all the way to the right.
+	shader.setUniformMatrix4f("view", view);
 	backgroundMesh.draw();
 
 	shader.end();
