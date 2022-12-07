@@ -98,19 +98,6 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 
 	// matrices
-	Transformation transformationA;
-	vec3 translationA = vec3(-0.55, 0, 0);
-	vec3 scaleA = vec3(1.5, 1, 1);
-	float rotationA = 0.0f;
-	transformationA.setTranslate(translationA);
-	transformationA.setScale(scaleA);
-	transformationA.setRotate(rotationA);
-
-	static float rotation = 1.0f;
-	rotation += 1.0f * ofGetLastFrameTime();
-	transformationA.setRotate(rotation);
-
-	mat4 transformB = Func.buildMatrix(vec3(-0.5, 0.6, 0), 0.5f, vec3(2, 1, 1));
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
@@ -118,11 +105,20 @@ void ofApp::draw(){
 	cloudShader.setUniformMatrix4f("view", view);
 
 	// cloud transformation matrix A
-	cloudShader.setUniformMatrix4f("transform", 
-		Func.updateTransformation(translationA, rotationA, scaleA, transformationA));
+	mat4 translationA = translate(vec3(-0.55, 0, 0));
+	mat4 scaleA = scale(vec3(1.5, 1, 1));
+	static float rotation = 1.0f;
+	rotation += 1.0f * ofGetLastFrameTime();
+
+	mat4 transformA = translationA * scaleA;
+	mat4 ourRotation = rotate(rotation, vec3(0, 0, 1.0));
+	// Scale -> Translate -> -Translate -> NEW ROTATE -> Translate
+	mat4 newMatrix = translationA * ourRotation * inverse(translationA);
+	cloudShader.setUniformMatrix4f("transform", newMatrix * transformA);
 	cloudMesh.draw();
 
 	// cloud transformation matrix B
+	mat4 transformB = Func.buildMatrix(vec3(-0.5, 0.6, 0), 0.5f, vec3(2, 1, 1));
 	cloudShader.setUniformMatrix4f("transform", transformB);
 	cloudMesh.draw();
 	cloudShader.end();

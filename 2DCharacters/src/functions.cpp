@@ -11,7 +11,7 @@ glm::mat4 functions::updateTransformation(glm::vec3 t, float r, glm::vec3 s, Tra
 	mat4 initialTransform = translate * rotate * scale;
 	mat4 finalTransform = transformation.getTranslate() * transformation.getRotate() * transformation.getScale();
 	//Multiplying a matrix by its' inverse ALWAYS creates the identity matrix
-	return initialTransform * inverse(initialTransform) * finalTransform;
+	return finalTransform * inverse(initialTransform) * initialTransform;
 }
 
 glm::mat4 functions::buildMatrix(glm::vec3 trans, float rot, glm::vec3 scale)
