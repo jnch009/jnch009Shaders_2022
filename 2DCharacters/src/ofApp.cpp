@@ -36,7 +36,7 @@ void ofApp::update(){
 	{
 		charPos += glm::vec3(speed, 0, 0);
 		// Easy way:
-		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 		
 		// Hard way:
 		transformation.setTranslate(charPos);
@@ -45,7 +45,7 @@ void ofApp::update(){
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
 		//Easy way by building an entirely new matrix:
-		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 		
 		//Hard way:
 		transformation.setTranslate(charPos);
