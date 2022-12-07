@@ -126,8 +126,11 @@ void ofApp::draw(){
 	sunShader.begin();
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+	
 	sunShader.setUniformTexture("tex", sunImg, 0);
 	sunShader.setUniformMatrix4f("transform", mat4());
+	sunShader.setUniformMatrix4f("view", view);
+
 	sunMesh.draw();
 	sunShader.end();
 }
