@@ -18,3 +18,5 @@ When doing row major multiplication, we do the opposite by going from **left** t
 4. Clip Space
 - Normalized device coordinates where vertices outside of the -1 to +1 bounds are clipped
 - Multiply by projection matrix.
+
+*Note: you can go backwards by multiplying by the inverse matrix*
