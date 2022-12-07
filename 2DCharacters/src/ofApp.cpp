@@ -65,7 +65,7 @@ void ofApp::draw(){
 	// Enable depth testing for opaque mesh
 	ofEnableDepthTest();
 
-	cam.position = vec3(-1, 0, 0);
+	cam.position = vec3(0, 0, 0);
 	mat4 view = Func.buildViewMatrix(cam);
 
 	spritesheetShader.begin();
@@ -101,7 +101,7 @@ void ofApp::draw(){
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
-	cloudShader.setUniformMatrix4f("transform", mat4());
+	cloudShader.setUniformMatrix4f("model", mat4());
 	cloudShader.setUniformMatrix4f("view", view);
 
 	// cloud transformation matrix A
@@ -128,7 +128,7 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
 	
 	sunShader.setUniformTexture("tex", sunImg, 0);
-	sunShader.setUniformMatrix4f("transform", mat4());
+	sunShader.setUniformMatrix4f("model", mat4());
 	sunShader.setUniformMatrix4f("view", view);
 
 	sunMesh.draw();
