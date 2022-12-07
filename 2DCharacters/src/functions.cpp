@@ -46,5 +46,7 @@ void functions::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos)
 glm::mat4 functions::buildViewMatrix(CameraData cam)
 {
 	using namespace glm;
+	// We need to invert this because the view matrix
+	// does not move the camera, but everything else
 	return inverse(buildMatrix(cam.position, cam.rotation, vec3(1, 1, 1)));
 }
