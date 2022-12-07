@@ -44,7 +44,7 @@ void ofApp::update(){
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
-		//Easy way:
+		//Easy way by building an entirely new matrix:
 		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
 		
 		//Hard way:
