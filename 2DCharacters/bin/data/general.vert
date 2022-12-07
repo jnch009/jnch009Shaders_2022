@@ -8,7 +8,7 @@ out vec2 fragUV;
 void main()
 {
       gl_Position = proj * view * model * vec4(pos, 1.0);
-      /* 1.0 - uv.y flips the y-axis so that negative is down and positive is up */
-      /* OpenGL by default is the opposite */
+      /* OpenGL by default expects image data to be read from bottom to top */
+      /* Images generally go from top to bottom which is why we need to invert */
       fragUV = vec2(uv.x, 1.0 - uv.y);
 }
