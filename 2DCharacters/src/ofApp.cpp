@@ -110,10 +110,12 @@ void ofApp::draw(){
 	rotation += 1.0f * ofGetLastFrameTime();
 	transformationA.setRotate(rotation);
 
-	mat4 transformB = Func.buildMatrix(vec3(0.7, 0.8, 0), 0.5f, vec3(1, 1, 1));
+	mat4 transformB = Func.buildMatrix(vec3(-0.5, 0.6, 0), 0.5f, vec3(2, 1, 1));
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
+	cloudShader.setUniformMatrix4f("transform", mat4());
+	cloudShader.setUniformMatrix4f("view", view);
 
 	// cloud transformation matrix A
 	cloudShader.setUniformMatrix4f("transform", 
