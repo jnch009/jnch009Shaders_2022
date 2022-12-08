@@ -43,6 +43,7 @@ class ofApp : public ofBaseApp{
 
 		bool walkRight;
 		bool walkLeft;
+		bool jump;
 		glm::vec3 charPos;
 		glm::mat4 charTransform;
 

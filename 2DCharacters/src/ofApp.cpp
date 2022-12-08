@@ -36,17 +36,17 @@ void ofApp::update(){
 	{
 		charPos += glm::vec3(speed, 0, 0);
 		// Easy way:
-		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
+		charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 		
 		// Hard way:
-		transformation.setTranslate(charPos);
-		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
+		/*transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);*/
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
 		//Easy way by building an entirely new matrix:
 		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
-		
+
 		//Hard way:
 		transformation.setTranslate(charPos);
 		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
@@ -69,6 +69,18 @@ void ofApp::draw(){
 	mat4 view = Func.buildViewMatrix(cam);
 	proj = glm::ortho(-1.33f, 1.33f, -1.0f, 1.0f, 0.0f, 10.0f);
 	model = mat4();
+
+	if (charPos.y >= 0.75) {
+		jump = false;
+	}
+
+	if (jump) {
+		charPos += glm::vec3(0, 0.02, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, glm::vec3(1, 1, 1));
+	} else if (!jump && charPos.y > 0) {
+		charPos -= glm::vec3(0, 0.02, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, glm::vec3(1, 1, 1));
+	}
 
 	// SpritesheetShader begins
 	spritesheetShader.begin();
@@ -157,6 +169,10 @@ void ofApp::keyPressed(int key){
 
 	else if (key == ofKey::OF_KEY_LEFT) {
 		walkLeft = true;
+	}
+
+	else if (key == ofKey::OF_KEY_SHIFT) {
+		jump = true;
 	}
 }
 
