@@ -47,4 +47,7 @@ class ofApp : public ofBaseApp{
 		glm::mat4 charTransform;
 
 		CameraData cam;
+
+		glm::mat4 proj;
+		glm::mat4 model;
 };
