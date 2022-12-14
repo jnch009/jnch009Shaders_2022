@@ -34,7 +34,13 @@ void ofApp::update(){
 
 	if (walkRight)
 	{
-		charPos += glm::vec3(speed, 0, 0);
+		if (charPos.x < 0.9) {
+			charPos += glm::vec3(speed, 0, 0);
+		}
+		else {
+			charPos = glm::vec3(0.9f, 0, 0);
+		}
+		
 		// Easy way:
 		charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 		
@@ -43,7 +49,12 @@ void ofApp::update(){
 		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);*/
 	}
 	else if (walkLeft) {
-		charPos -= glm::vec3(speed, 0, 0);
+		if (charPos.x > -0.9) {
+			charPos -= glm::vec3(speed, 0, 0);
+		}
+		else {
+			charPos = glm::vec3(-0.9f, 0, 0);
+		}
 		//Easy way by building an entirely new matrix:
 		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 
