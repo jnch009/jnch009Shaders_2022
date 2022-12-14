@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\data\.gitkeep" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>

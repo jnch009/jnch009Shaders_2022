@@ -35,6 +35,7 @@
     <None Include="bin\data\cloud.frag" />
     <None Include="bin\data\spritesheet.vert" />
     <None Include="bin\data\general.vert" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="bin\data\alien.png" />

@@ -199,6 +199,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="bin\data\.gitkeep" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -203,6 +203,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="bin\data\alphaTest.frag" />
     <None Include="bin\data\cloud.frag" />
     <None Include="bin\data\general.vert" />
