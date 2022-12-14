@@ -15,6 +15,11 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	using namespace glm;
+	uvShader.begin();
+	uvShader.setUniformMatrix4f("mvp", mat4());
+	torusMesh.draw();
+	uvShader.end();
 }
 
 //--------------------------------------------------------------
