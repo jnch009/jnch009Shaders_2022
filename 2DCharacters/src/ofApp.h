@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "functions.h"
+#include "structs.h"
 
 class ofApp : public ofBaseApp{
 
@@ -42,6 +43,12 @@ class ofApp : public ofBaseApp{
 
 		bool walkRight;
 		bool walkLeft;
+		bool jump;
 		glm::vec3 charPos;
 		glm::mat4 charTransform;
+
+		CameraData cam;
+
+		glm::mat4 proj;
+		glm::mat4 model;
 };

@@ -8,9 +8,9 @@ void ofApp::setup(){
 	ofDisableArbTex();
 
 	Func.buildMesh(charMesh, 0.1, 0.2, glm::vec3(0.0, -0.25, 0.0));
-	Func.buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, 0.5));
+	Func.buildMesh(backgroundMesh, 1, 1, glm::vec3(0.0, 0.0, -0.5));
 	Func.buildMesh(cloudMesh, 0.25, 0.17, glm::vec3(0.0, 0.0, 0.0));
-	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, 0.4));
+	Func.buildMesh(sunMesh, 1, 1, glm::vec3(0.0, 0.0, -0.4));
 
 	shader.load("general.vert", "alphaTest.frag");
 	cloudShader.load("general.vert", "cloud.frag");
@@ -36,17 +36,17 @@ void ofApp::update(){
 	{
 		charPos += glm::vec3(speed, 0, 0);
 		// Easy way:
-		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
+		charTransform = Func.buildMatrix(charPos, charRotate, charScale);
 		
 		// Hard way:
-		transformation.setTranslate(charPos);
-		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
+		/*transformation.setTranslate(charPos);
+		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);*/
 	}
 	else if (walkLeft) {
 		charPos -= glm::vec3(speed, 0, 0);
-		//Easy way:
-		//charTransform = Func.buildMatrix(charPos, 0.0f, vec3(1, 1, 1));
-		
+		//Easy way by building an entirely new matrix:
+		//charTransform = Func.buildMatrix(charPos, charRotate, charScale);
+
 		//Hard way:
 		transformation.setTranslate(charPos);
 		charTransform = Func.updateTransformation(charTranslate, charRotate, charScale, transformation);
@@ -65,24 +65,52 @@ void ofApp::draw(){
 	// Enable depth testing for opaque mesh
 	ofEnableDepthTest();
 
+	cam.position = vec3(0, 0, 0);
+	mat4 view = Func.buildViewMatrix(cam);
+	proj = glm::ortho(-1.33f, 1.33f, -1.0f, 1.0f, 0.0f, 10.0f);
+	model = mat4();
+
+	if (charPos.y >= 0.75) {
+		jump = false;
+	}
+
+	if (jump) {
+		charPos += glm::vec3(0, 0.02, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, glm::vec3(1, 1, 1));
+	} else if (!jump && charPos.y > 0) {
+		charPos -= glm::vec3(0, 0.02, 0);
+		charTransform = Func.buildMatrix(charPos, 0.0f, glm::vec3(1, 1, 1));
+	}
+
+	// SpritesheetShader begins
 	spritesheetShader.begin();
+	spritesheetShader.setUniformMatrix4f("view", view);
 	spritesheetShader.setUniform2f("size", spriteSize);
 	spritesheetShader.setUniform2f("offset", spriteFrame);
 	spritesheetShader.setUniformTexture("tex", alienSprite, 0);
-	spritesheetShader.setUniformMatrix4f("transform", charTransform);
+	spritesheetShader.setUniformMatrix4f("model", charTransform);
+	spritesheetShader.setUniformMatrix4f("proj", proj);
 	charMesh.draw();
 	spritesheetShader.end();
+	// SpritesheetShader ends
 
+	// background shader begins
 	shader.begin();
 	// used for the static alien image
 	/*shader.setUniformTexture("tex", alienImg, 0);
 	charMesh.draw();*/
 
 	shader.setUniformTexture("tex", bgImg, 0);
-	shader.setUniformMatrix4f("transform", mat4());
+	// The bg moves to the middle because it initially starts at
+	// x-coordinate -1. Moving the camera by 1 means -1+1 = 0 (middle)
+	// I thought for some reason it would move all the way to the right.
+	shader.setUniformMatrix4f("view", view);
+	shader.setUniformMatrix4f("model", model);
+	shader.setUniformMatrix4f("proj", proj);
 	backgroundMesh.draw();
 
 	shader.end();
+	// background shader ends
 
 	// disable depth testing for translucent meshes
 	ofDisableDepthTest();
@@ -90,40 +118,47 @@ void ofApp::draw(){
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 
 	// matrices
-	Transformation transformationA;
-	vec3 translationA = vec3(-0.55, 0, 0);
-	vec3 scaleA = vec3(1.5, 1, 1);
-	float rotationA = 0.0f;
-	transformationA.setTranslate(translationA);
-	transformationA.setScale(scaleA);
-	transformationA.setRotate(rotationA);
-
-	static float rotation = 1.0f;
-	rotation += 1.0f * ofGetLastFrameTime();
-	transformationA.setRotate(rotation);
-
-	mat4 transformB = Func.buildMatrix(vec3(0.7, 0.8, 0), 0.5f, vec3(1, 1, 1));
+	// cloud shader begins
 	cloudShader.begin();
 	//cloud frag shader
 	cloudShader.setUniformTexture("tex", cloudImg, 0);
+	cloudShader.setUniformMatrix4f("view", view);
+	cloudShader.setUniformMatrix4f("proj", proj);
 
 	// cloud transformation matrix A
-	cloudShader.setUniformMatrix4f("transform", 
-		Func.updateTransformation(translationA, rotationA, scaleA, transformationA));
+	mat4 translationA = translate(vec3(-0.55, 0, 0));
+	mat4 scaleA = scale(vec3(1.5, 1, 1));
+	static float rotation = 1.0f;
+	rotation += 1.0f * ofGetLastFrameTime();
+
+	mat4 transformA = translationA * scaleA;
+	mat4 ourRotation = rotate(rotation, vec3(0, 0, 1.0));
+	// Scale -> Translate -> -Translate -> NEW ROTATE -> Translate
+	mat4 newMatrix = translationA * ourRotation * inverse(translationA);
+	cloudShader.setUniformMatrix4f("model", newMatrix * transformA);
 	cloudMesh.draw();
 
 	// cloud transformation matrix B
-	cloudShader.setUniformMatrix4f("transform", transformB);
+	mat4 transformB = Func.buildMatrix(vec3(0.6, 0.6, 0), 0.5f, vec3(0.75, 1, 1));
+	cloudShader.setUniformMatrix4f("model", transformB);
 	cloudMesh.draw();
 	cloudShader.end();
 
+	// cloud shader ends
+
+	// sun shader begins
 	sunShader.begin();
 	// Add additive blending for sun
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+	
 	sunShader.setUniformTexture("tex", sunImg, 0);
-	sunShader.setUniformMatrix4f("transform", mat4());
+	sunShader.setUniformMatrix4f("model", model);
+	sunShader.setUniformMatrix4f("view", view);
+	sunShader.setUniformMatrix4f("proj", proj);
+
 	sunMesh.draw();
 	sunShader.end();
+	// sun shader ends
 }
 
 //--------------------------------------------------------------
@@ -134,6 +169,10 @@ void ofApp::keyPressed(int key){
 
 	else if (key == ofKey::OF_KEY_LEFT) {
 		walkLeft = true;
+	}
+
+	else if (key == ofKey::OF_KEY_SHIFT) {
+		jump = true;
 	}
 }
 

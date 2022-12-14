@@ -187,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="src\functions.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\structs.h" />
     <ClInclude Include="src\Transformation.h" />
   </ItemGroup>
   <ItemGroup>

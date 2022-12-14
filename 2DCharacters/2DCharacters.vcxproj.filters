@@ -25,6 +25,7 @@
     <ClInclude Include="src\Transformation.h">
       <Filter>src\dataStructures</Filter>
     </ClInclude>
+    <ClInclude Include="src\structs.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
