@@ -1,6 +1,7 @@
 #include "functions.h"
 #include "ofMain.h"
 #include "Transformation.h"
+#include "structs.h"
 
 glm::mat4 functions::updateTransformation(glm::vec3 t, float r, glm::vec3 s, Transformation transformation) {
 	using glm::mat4;
@@ -10,7 +11,7 @@ glm::mat4 functions::updateTransformation(glm::vec3 t, float r, glm::vec3 s, Tra
 	mat4 initialTransform = translate * rotate * scale;
 	mat4 finalTransform = transformation.getTranslate() * transformation.getRotate() * transformation.getScale();
 	//Multiplying a matrix by its' inverse ALWAYS creates the identity matrix
-	return initialTransform * inverse(initialTransform) * finalTransform;
+	return finalTransform * inverse(initialTransform) * initialTransform;
 }
 
 glm::mat4 functions::buildMatrix(glm::vec3 trans, float rot, glm::vec3 scale)
@@ -40,4 +41,12 @@ void functions::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos)
 
 	ofIndexType indices[6] = { 0,1,2,2,3,0 };
 	mesh.addIndices(indices, 6);
+}
+
+glm::mat4 functions::buildViewMatrix(CameraData cam)
+{
+	using namespace glm;
+	// We need to invert this because the view matrix
+	// does not move the camera, but everything else
+	return inverse(buildMatrix(cam.position, cam.rotation, vec3(1, 1, 1)));
 }
