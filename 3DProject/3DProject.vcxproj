@@ -201,6 +201,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="bin\data\.gitkeep" />
+    <None Include="bin\data\passthrough.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>
