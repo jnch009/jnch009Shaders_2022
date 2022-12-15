@@ -23,6 +23,7 @@ class ofApp : public ofBaseApp{
 		struct CameraData {
 			glm::vec3 position;
 			float rotation;
+			float fov;
 		};
 
 		ofMesh torusMesh;

@@ -17,15 +17,16 @@ void ofApp::update(){
 void ofApp::draw(){
 	using namespace glm;
 
-	// Orthographic Projection start
 	cam.position = vec3(0, 0, 1);
-	cam.rotation = radians(100.0f);
-	float aspect = 1920.0f / 1080.0f;
+	cam.rotation = radians(90.0f);
+	cam.fov = radians(60.0f);
+	float aspect = 1024.0f / 768.0f;
 	mat4 model = rotate(1.0f, vec3(1, 1, 1)) * scale(vec3(0.5, 0.5, 0.5));
 	mat4 view = inverse(translate(cam.position));
 	mat4 proj = ortho(-aspect, aspect, -1.0f, 1.0f, 0.0f, 10.0f);
+	mat4 perspProj = perspective(cam.fov, aspect, 0.01f, 10.0f);
 	mat4 orthoMVP = proj * view * model;
-	// Orthographic Projection end
+	mat4 perspMVP = perspProj * view * model;
 
 	switch (mode)
 	{
@@ -34,6 +35,9 @@ void ofApp::draw(){
 			break;
 		case 1:
 			MVP = orthoMVP;
+			break;
+		case 2:
+			MVP = perspMVP;
 			break;
 		default:
 			MVP = mat4();
@@ -47,8 +51,17 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if (key == ofKey::OF_KEY_SHIFT) {
-		mode = (mode + 1) % 2;
+	if (key == ofKey::OF_KEY_RIGHT) {
+		mode = (mode + 1) % 3;
+	}
+
+	if (key == ofKey::OF_KEY_LEFT) {
+		if (mode - 1 < 0) {
+			mode = 2;
+		}
+		else {
+			mode = (mode - 1) % 3;
+		}
 	}
 }
 
