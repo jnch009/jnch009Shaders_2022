@@ -31,4 +31,7 @@ class ofApp : public ofBaseApp{
 		CameraData cam;
 		int mode = 0;
 		glm::mat4 MVP;
+		float fov = 90.0f;
+		bool increaseFov = false;
+		bool decreaseFov = false;
 };

@@ -10,6 +10,23 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	float speed = 50 * ofGetLastFrameTime();
+	if (increaseFov) {
+		if (fov > 140) {
+			fov = 140;
+		}
+		else {
+			fov = fov + speed;
+		}
+	}
+	else if (decreaseFov) {
+		if (fov < 50) {
+			fov = 50;
+		}
+		else {
+			fov = fov - speed;
+		}
+	}
 
 }
 
@@ -19,12 +36,12 @@ void ofApp::draw(){
 
 	cam.position = vec3(0, 0, 1);
 	cam.rotation = radians(90.0f);
-	cam.fov = radians(60.0f);
+	cam.fov = radians(fov);
 	float aspect = 1024.0f / 768.0f;
 	mat4 model = rotate(1.0f, vec3(1, 1, 1)) * scale(vec3(0.5, 0.5, 0.5));
 	mat4 view = inverse(translate(cam.position));
 	mat4 proj = ortho(-aspect, aspect, -1.0f, 1.0f, 0.0f, 10.0f);
-	mat4 perspProj = perspective(cam.fov, aspect, 0.01f, 10.0f);
+	mat4 perspProj = perspective(cam.fov, aspect, 0.25f, 10.0f);
 	mat4 orthoMVP = proj * view * model;
 	mat4 perspMVP = perspProj * view * model;
 
@@ -63,11 +80,25 @@ void ofApp::keyPressed(int key){
 			mode = (mode - 1) % 3;
 		}
 	}
+
+	if (key == ofKey::OF_KEY_UP) {
+		increaseFov = true;
+	}
+
+	if (key == ofKey::OF_KEY_DOWN) {
+		decreaseFov = true;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+	if (key == ofKey::OF_KEY_UP) {
+		increaseFov = false;
+	}
 
+	if (key == ofKey::OF_KEY_DOWN) {
+		decreaseFov = false;
+	}
 }
 
 //--------------------------------------------------------------
