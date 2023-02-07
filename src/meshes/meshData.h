@@ -7,10 +7,10 @@
 class MeshData {
 	public: 
 		std::vector<glm::vec2> texCoords = {
-			glm::vec2(0, 0),
-			glm::vec2(0, 1),
+			glm::vec2(0, 0.5),
+			glm::vec2(0.5, 0),
 			glm::vec2(1, 1),
-			glm::vec2(1, 0)
+			glm::vec2(0.25, 0.25)
 		};
 
 		std::vector<glm::vec3> topLeft = {

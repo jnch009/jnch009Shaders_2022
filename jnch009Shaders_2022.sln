@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2DCharacters", "2DCharacter
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderUnitTests", "ShaderUnitTests\ShaderUnitTests.vcxproj", "{BF93E82B-27A7-4BD6-8740-212971D5E6E2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DProject", "3DProject\3DProject.vcxproj", "{3EBF6741-3795-4203-B517-55C1D7F08F08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -50,6 +52,14 @@ Global
 		{BF93E82B-27A7-4BD6-8740-212971D5E6E2}.Release|Win32.Build.0 = Release|Win32
 		{BF93E82B-27A7-4BD6-8740-212971D5E6E2}.Release|x64.ActiveCfg = Release|x64
 		{BF93E82B-27A7-4BD6-8740-212971D5E6E2}.Release|x64.Build.0 = Release|x64
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Debug|Win32.Build.0 = Debug|Win32
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Debug|x64.ActiveCfg = Debug|x64
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Debug|x64.Build.0 = Debug|x64
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Release|Win32.ActiveCfg = Release|Win32
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Release|Win32.Build.0 = Release|Win32
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Release|x64.ActiveCfg = Release|x64
+		{3EBF6741-3795-4203-B517-55C1D7F08F08}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

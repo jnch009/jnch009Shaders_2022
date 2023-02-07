@@ -35,7 +35,7 @@ void ofApp::setup() {
     img2.load("checker.jpg");
     img2.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
-    loadShader(4);
+    loadShader(2);
 }
 
 //--------------------------------------------------------------
@@ -172,7 +172,7 @@ void ofApp::loadShader(int shaderToLoad) {
             shader.load("first_vertex.vert", "first_fragment.frag");
             break;
         case 2:
-            shader.load("uv_passthrough.vert", "uv_vis.frag");
+            shader.load("uv_passthrough_flipped.vert", "uv_vis.frag");
             break;
         case 3:
             shader.load("uv_passthrough.vert", "texture.frag");
