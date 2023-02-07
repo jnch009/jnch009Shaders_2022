@@ -25,5 +25,7 @@
     <None Include="bin\data\.gitkeep" />
     <None Include=".gitignore" />
     <None Include="bin\data\passthrough.vert" />
+    <None Include="bin\data\torus.ply" />
+    <None Include="bin\data\uv_vis.frag" />
   </ItemGroup>
 </Project>
