@@ -29,3 +29,10 @@ When doing row major multiplication, we do the opposite by going from **left** t
 - Multiply by projection matrix.
 
 *Note: you can go backwards by multiplying by the inverse matrix*
+
+## Normals
+- Very important to always normalize vectors that have been interpolated across a face.
+- Why does interpolation happen?
+	- Because each face is formed of 3 vertices which have information about their position, normal, UV coordinate, etc...
+	- So when you're sending the information over from the vertex shader to the fragment shader, something needs to happen to the inbetweens
+	- And that's where interpolation comes into play, to fill in those inbetweens.
