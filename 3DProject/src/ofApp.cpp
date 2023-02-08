@@ -5,6 +5,7 @@ void ofApp::setup(){
 	ofDisableArbTex();
 	ofEnableDepthTest();
 	torusMesh.load("torus.ply");
+	normalShader.load("mesh.vert", "normal_vis.frag");
 	uvShader.load("passthrough.vert", "uv_vis.frag");
 }
 
@@ -60,10 +61,19 @@ void ofApp::draw(){
 			MVP = mat4();
 	}
 
-	uvShader.begin();
-	uvShader.setUniformMatrix4f("mvp", MVP);
-	torusMesh.draw();
-	uvShader.end();
+	if (usingNormals) {
+		normalShader.begin();
+		normalShader.setUniformMatrix4f("mvp", MVP);
+		torusMesh.draw();
+		normalShader.end();
+	}
+	else {
+		uvShader.begin();
+		uvShader.setUniformMatrix4f("mvp", MVP);
+		torusMesh.draw();
+		uvShader.end();
+	}
+	
 }
 
 //--------------------------------------------------------------
@@ -87,6 +97,15 @@ void ofApp::keyPressed(int key){
 
 	if (key == ofKey::OF_KEY_DOWN) {
 		decreaseFov = true;
+	}
+
+	if (key == ofKey::OF_KEY_TAB) {
+		if (usingNormals) {
+			usingNormals = false;
+		}
+		else {
+			usingNormals = true;
+		}
 	}
 }
 
