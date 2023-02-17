@@ -1,0 +1,12 @@
+﻿  functions.cpp
+  main.cpp
+  ofApp.cpp
+     Creating library bin\2DCharacters_debug.lib and object bin\2DCharacters_debug.exp
+  2DCharacters.vcxproj -> E:\Programming\Graphics\openFrameworks\2DCharacters\bin\2DCharacters_debug.exe
+  
+  	                   2	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\fmodex\lib\vs\Win32\
+  	  *EXTRA File 		 5647872	E:\Programming\Graphics\openFrameworks\2DCharacters\bin\FreeImage.dll
+  
+  	                   1	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\FreeImage\lib\vs\Win32\
+  	  *EXTRA File 		 1266176	E:\Programming\Graphics\openFrameworks\2DCharacters\bin\fmodex.dll
+  	  *EXTRA File 		 1312768	E:\Programming\Graphics\openFrameworks\2DCharacters\bin\fmodexL.dll

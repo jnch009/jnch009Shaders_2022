@@ -1,0 +1,10 @@
+﻿  ShaderUnitTests.cpp
+     Creating library E:\Programming\Graphics\openFrameworks\jnch009-Practical-Shader-Development\bin\ShaderUnitTests.lib and object E:\Programming\Graphics\openFrameworks\jnch009-Practical-Shader-Development\bin\ShaderUnitTests.exp
+  ShaderUnitTests.vcxproj -> E:\Programming\Graphics\openFrameworks\jnch009-Practical-Shader-Development\bin\ShaderUnitTests.dll
+  
+  	                   2	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\fmodex\lib\vs\Win32\
+  	  *EXTRA File 		 5647872	E:\Programming\Graphics\openFrameworks\ShaderUnitTests\bin\FreeImage.dll
+  
+  	                   1	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\FreeImage\lib\vs\Win32\
+  	  *EXTRA File 		 1266176	E:\Programming\Graphics\openFrameworks\ShaderUnitTests\bin\fmodex.dll
+  	  *EXTRA File 		 1312768	E:\Programming\Graphics\openFrameworks\ShaderUnitTests\bin\fmodexL.dll
