@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 #include <glm/vec4.hpp>
-#include "Utility.h"
+#include "../GraphicsUtilityLib/Utility.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
