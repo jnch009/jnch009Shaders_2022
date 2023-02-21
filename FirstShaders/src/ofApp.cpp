@@ -1,6 +1,6 @@
 #include "ofApp.h"
 #include "meshes/meshData.h"
-#include "../GraphicsUtilityLib/Utility.h"
+#include "Utility.h"
 
 //IMPORTANT: DO NOT HARDCODE ANYTHING
 //--------------------------------------------------------------

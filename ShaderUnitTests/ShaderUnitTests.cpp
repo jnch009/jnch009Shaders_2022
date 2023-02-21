@@ -1,6 +1,6 @@
 #include "CppUnitTest.h"
 #include <glm/vec4.hpp>
-#include "../GraphicsUtilityLib/Utility.h"
+#include "Utility.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -25,6 +25,12 @@ namespace ShaderUnitTests
 			Assert::AreEqual(actual.g, 1.0f);
 			Assert::AreEqual(actual.b, 1.0f);
 			Assert::AreEqual(actual.w, 0.25f);
+		}
+
+		TEST_METHOD(determineColor_TEST_FAILURE)
+		{
+			glm::vec4 actual = Utility::determineColor(-123);
+			Assert::AreEqual(actual.r, 0.0f);
 		}
 	};
 }
