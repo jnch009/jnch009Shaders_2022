@@ -2,6 +2,7 @@
 Learning from Practical Shader Development
 
 In order to get the project to run, use VS2019 or earlier. There is currently an issue in openFrameworks in VS2022 with a DLL missing error.
+To start working, open the folder "jnch009-Practical-Shader-Development" and open the solution file.
 
 ## Learnings about UV/Texture coordinates
 - OpenGL by default expects image data to be read from bottom to top
