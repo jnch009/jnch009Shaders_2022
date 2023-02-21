@@ -23,7 +23,7 @@
     <ProjectGuid>{BF93E82B-27A7-4BD6-8740-212971D5E6E2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ShaderUnitTests</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

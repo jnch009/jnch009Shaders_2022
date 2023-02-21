@@ -1,11 +1,1 @@
-﻿  main.cpp
-  ofApp.cpp
-     Creating library bin\3DProject_debug.lib and object bin\3DProject_debug.exp
-  3DProject.vcxproj -> E:\Programming\Graphics\openFrameworks\3DProject\bin\3DProject_debug.exe
-  
-  	                   2	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\fmodex\lib\vs\Win32\
-  	  *EXTRA File 		 5647872	E:\Programming\Graphics\openFrameworks\3DProject\bin\FreeImage.dll
-  
-  	                   1	E:\Programming\Graphics\of_v0.10.0_vs2017_release\libs\FreeImage\lib\vs\Win32\
-  	  *EXTRA File 		 1266176	E:\Programming\Graphics\openFrameworks\3DProject\bin\fmodex.dll
-  	  *EXTRA File 		 1312768	E:\Programming\Graphics\openFrameworks\3DProject\bin\fmodexL.dll
+﻿
