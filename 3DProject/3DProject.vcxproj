@@ -201,6 +201,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="bin\data\.gitkeep" />
+    <None Include="bin\data\diffuse.frag" />
     <None Include="bin\data\mesh.vert" />
     <None Include="bin\data\normal_vis.frag" />
     <None Include="bin\data\passthrough.vert" />
