@@ -23,3 +23,13 @@ glm::vec4 Utility::determineColor(int key) {
 
     return glm::vec4(1, 0, 0, 1);
 }
+
+// 1. If the dot product is 0, it means that the two vectors are perpendicular to one another.
+// 2. A positive dot product means that the angle between the two vectors is less than 90 degrees.
+// 3. A negative dot product means that the angle between the two vectors is greater than 90 degrees.
+float dot(glm::vec3 a, glm::vec3 b) {
+    float x = a.x * b.x;
+    float y = a.y * b.y;
+    float z = a.z * b.z;
+    return x + y + z;
+}
