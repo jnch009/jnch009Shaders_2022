@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Utility.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -20,16 +21,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		struct CameraData {
-			glm::vec3 position;
-			float rotation;
-			float fov;
-		};
-
 		ofMesh torusMesh;
 		ofShader uvShader;
 		ofShader normalShader;
-		CameraData cam;
+		Utility::CameraData cam;
 		int mode = 0;
 		bool usingNormals = false;
 		glm::mat4 MVP;

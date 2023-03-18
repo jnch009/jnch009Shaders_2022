@@ -43,3 +43,13 @@ float angleBetween(glm::vec3 a, glm::vec3 b) {
     float angle = acos(cosAngle);
     return angle;
 }
+
+// multiplied by negative 1 because we are changing the direction that light faces
+// we want it to point away from the surface instead of towards it
+glm::vec3 getLightDirection(Utility::DirectionalLight& l) {
+    return glm::normalize(l.direction * -1.0f);
+}
+
+glm::vec3 getLightColor(Utility::DirectionalLight& l) {
+    return l.color * l.intensity;
+}
