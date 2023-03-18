@@ -40,7 +40,7 @@ void ofApp::draw(){
 	cam.fov = radians(fov);
 	float aspect = 1024.0f / 768.0f;
 	//mat4 model = scale(vec3(0.5, 0.5, 0.5));
-	mat4 model = rotate(0.5f, vec3(1, 0, 0)) * scale(vec3(0.5, 0.5, 0.5));
+	mat4 model = rotate(1.0f, vec3(1, 1, 1)) * scale(vec3(0.5, 0.5, 0.5));
 	mat4 view = inverse(translate(cam.position));
 	mat4 proj = ortho(-aspect, aspect, -1.0f, 1.0f, 0.0f, 10.0f);
 	mat4 perspProj = perspective(cam.fov, aspect, 0.25f, 10.0f);
@@ -66,6 +66,7 @@ void ofApp::draw(){
 	if (usingNormals) {
 		normalShader.begin();
 		normalShader.setUniformMatrix4f("mvp", MVP);
+		normalShader.setUniformMatrix3f("normal", normalMatrix);
 		torusMesh.draw();
 		normalShader.end();
 	}
