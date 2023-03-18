@@ -24,9 +24,11 @@ class ofApp : public ofBaseApp{
 		ofMesh torusMesh;
 		ofShader uvShader;
 		ofShader normalShader;
+		ofShader diffuseShader;
 		Utility::CameraData cam;
 		int mode = 0;
 		bool usingNormals = false;
+		bool usingDiffuse = false;
 		glm::mat4 MVP;
 		float fov = 90.0f;
 		bool increaseFov = false;

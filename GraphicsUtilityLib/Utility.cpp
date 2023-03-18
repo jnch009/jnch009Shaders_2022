@@ -27,7 +27,7 @@ glm::vec4 Utility::determineColor(int key) {
 // 1. If the dot product is 0, it means that the two vectors are perpendicular to one another.
 // 2. A positive dot product means that the angle between the two vectors is less than 90 degrees.
 // 3. A negative dot product means that the angle between the two vectors is greater than 90 degrees.
-float dot(glm::vec3 a, glm::vec3 b) {
+float Utility::dot(glm::vec3 a, glm::vec3 b) {
     float x = a.x * b.x;
     float y = a.y * b.y;
     float z = a.z * b.z;
@@ -36,7 +36,7 @@ float dot(glm::vec3 a, glm::vec3 b) {
 
 // length of vector: square root of the sum of the squares
 // not used for lighting calculations, but still important to know
-float angleBetween(glm::vec3 a, glm::vec3 b) {
+float Utility::angleBetween(glm::vec3 a, glm::vec3 b) {
     float d = dot(a, b);
     float len = length(a) * length(b);
     float cosAngle = d / len;
@@ -46,10 +46,10 @@ float angleBetween(glm::vec3 a, glm::vec3 b) {
 
 // multiplied by negative 1 because we are changing the direction that light faces
 // we want it to point away from the surface instead of towards it
-glm::vec3 getLightDirection(Utility::DirectionalLight& l) {
+glm::vec3 Utility::getLightDirection(Utility::DirectionalLight& l) {
     return glm::normalize(l.direction * -1.0f);
 }
 
-glm::vec3 getLightColor(Utility::DirectionalLight& l) {
+glm::vec3 Utility::getLightColor(Utility::DirectionalLight& l) {
     return l.color * l.intensity;
 }

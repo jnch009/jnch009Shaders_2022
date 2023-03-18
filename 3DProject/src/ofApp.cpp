@@ -1,4 +1,5 @@
-#include "ofApp.h"
+﻿#include "ofApp.h"
+#include "Utility.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -6,6 +7,7 @@ void ofApp::setup(){
 	ofEnableDepthTest();
 	torusMesh.load("torus.ply");
 	normalShader.load("mesh.vert", "normal_vis.frag");
+	diffuseShader.load("mesh.vert", "diffuse.frag");
 	uvShader.load("passthrough.vert", "uv_vis.frag");
 }
 
@@ -34,6 +36,11 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	using namespace glm;
+
+	Utility::DirectionalLight dirLight;
+	dirLight.direction = normalize(vec3(0, -1, 0));
+	dirLight.color = vec3(1, 1, 1);
+	dirLight.intensity = 1.0f;
 
 	cam.position = vec3(0, 0, 1);
 	cam.rotation = radians(90.0f);
@@ -69,6 +76,15 @@ void ofApp::draw(){
 		normalShader.setUniformMatrix3f("normal", normalMatrix);
 		torusMesh.draw();
 		normalShader.end();
+	}
+	else if (usingDiffuse) {
+		diffuseShader.begin();
+		diffuseShader.setUniformMatrix4f("mvp", MVP);
+		diffuseShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
+		diffuseShader.setUniform3f("lightDir", Utility::getLightDirection(dirLight));
+		diffuseShader.setUniform3f("lightCol", Utility::getLightColor(dirLight));
+		torusMesh.draw();
+		diffuseShader.end();
 	}
 	else {
 		uvShader.begin();
@@ -108,6 +124,15 @@ void ofApp::keyPressed(int key){
 		}
 		else {
 			usingNormals = true;
+		}
+	}
+
+	if (key == ofKey::OF_KEY_LEFT_CONTROL) {
+		if (usingDiffuse) {
+			usingDiffuse = false;
+		}
+		else {
+			usingDiffuse = true;
 		}
 	}
 }
