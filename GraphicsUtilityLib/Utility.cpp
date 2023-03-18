@@ -1,4 +1,4 @@
-#include "Utility.h"
+﻿#include "Utility.h"
 
 glm::vec4 Utility::determineColor(int key) {
     /* rgb(1,0,1,1) if keypress is down arrow*/
@@ -32,4 +32,14 @@ float dot(glm::vec3 a, glm::vec3 b) {
     float y = a.y * b.y;
     float z = a.z * b.z;
     return x + y + z;
+}
+
+// length of vector: square root of the sum of the squares
+// not used for lighting calculations, but still important to know
+float angleBetween(glm::vec3 a, glm::vec3 b) {
+    float d = dot(a, b);
+    float len = length(a) * length(b);
+    float cosAngle = d / len;
+    float angle = acos(cosAngle);
+    return angle;
 }
