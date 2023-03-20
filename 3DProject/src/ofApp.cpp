@@ -50,10 +50,19 @@ void ofApp::draw(){
 	mat4 model = rotate(1.0f, vec3(1, 1, 1)) * scale(vec3(0.5, 0.5, 0.5));
 	mat4 view = inverse(translate(cam.position));
 	mat4 proj = ortho(-aspect, aspect, -1.0f, 1.0f, 0.0f, 10.0f);
-	mat4 perspProj = perspective(cam.fov, aspect, 0.25f, 10.0f);
+	mat4 perspProj = perspective(cam.fov, aspect, 0.01f, 10.0f);
 	mat4 orthoMVP = proj * view * model;
 	mat4 perspMVP = perspProj * view * model;
 	mat3 normalMatrix = transpose(inverse(mat3(model)));
+
+	// rotating torus and showing an overhead view
+	cam.position = vec3(0, 0.75f, 1.0f);
+	float cAngle = radians(-45.0f);
+	vec3 right = vec3(1, 0, 0);
+	view = inverse(translate(cam.position) * rotate(cAngle, right));
+	model = rotate(radians(90.0f), right) * scale(vec3(0.5, 0.5, 0.5));
+	mat4 normalMatrixDiffuse = transpose(inverse(mat3(model)));
+	mat4 perspDiffuseMVP = perspProj * view * model;
 
 	switch (mode)
 	{
@@ -65,6 +74,9 @@ void ofApp::draw(){
 			break;
 		case 2:
 			MVP = perspMVP;
+			break;
+		case 3:
+			MVP = perspDiffuseMVP;
 			break;
 		default:
 			MVP = mat4();
@@ -80,6 +92,12 @@ void ofApp::draw(){
 	else if (usingDiffuse) {
 		diffuseShader.begin();
 		diffuseShader.setUniformMatrix4f("mvp", MVP);
+		if (mode == 3) {
+			diffuseShader.setUniformMatrix3f("normal", normalMatrixDiffuse);
+		}
+		else {
+			diffuseShader.setUniformMatrix3f("normal", normalMatrix);
+		}
 		diffuseShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
 		diffuseShader.setUniform3f("lightDir", Utility::getLightDirection(dirLight));
 		diffuseShader.setUniform3f("lightCol", Utility::getLightColor(dirLight));
@@ -98,7 +116,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (key == ofKey::OF_KEY_RIGHT) {
-		mode = (mode + 1) % 3;
+		mode = (mode + 1) % 4;
 	}
 
 	if (key == ofKey::OF_KEY_LEFT) {
@@ -106,7 +124,7 @@ void ofApp::keyPressed(int key){
 			mode = 2;
 		}
 		else {
-			mode = (mode - 1) % 3;
+			mode = (mode - 1) % 4;
 		}
 	}
 

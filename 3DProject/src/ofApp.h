@@ -30,7 +30,7 @@ class ofApp : public ofBaseApp{
 		bool usingNormals = false;
 		bool usingDiffuse = false;
 		glm::mat4 MVP;
-		float fov = 90.0f;
+		float fov = 100.0f;
 		bool increaseFov = false;
 		bool decreaseFov = false;
 };
