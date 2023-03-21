@@ -53,6 +53,7 @@ void ofApp::draw(){
 	mat4 perspProj = perspective(cam.fov, aspect, 0.01f, 10.0f);
 	mat4 orthoMVP = proj * view * model;
 	mat4 perspMVP = perspProj * view * model;
+	// transforming the model matrix to handle non-uniformly scaled objects
 	mat3 normalMatrix = transpose(inverse(mat3(model)));
 
 	// rotating torus and showing an overhead view
@@ -121,7 +122,7 @@ void ofApp::keyPressed(int key){
 
 	if (key == ofKey::OF_KEY_LEFT) {
 		if (mode - 1 < 0) {
-			mode = 2;
+			mode = 3;
 		}
 		else {
 			mode = (mode - 1) % 4;
