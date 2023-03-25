@@ -26,6 +26,7 @@ class ofApp : public ofBaseApp{
 		ofShader normalShader;
 		ofShader diffuseShader;
 		ofShader rimShader;
+		ofShader rimAndDirShader;
 		Utility::CameraData cam;
 		int mode = 0;
 		bool usingNormals = false;

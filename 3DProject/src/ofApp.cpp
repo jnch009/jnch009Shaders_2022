@@ -10,6 +10,7 @@ void ofApp::setup(){
 	diffuseShader.load("mesh.vert", "diffuse.frag");
 	uvShader.load("passthrough.vert", "uv_vis.frag");
 	rimShader.load("rimLight.vert", "rimLight.frag");
+	rimAndDirShader.load("rimLight.vert", "rimAndDir.frag");
 }
 
 //--------------------------------------------------------------
@@ -37,6 +38,11 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	using namespace glm;
+
+	ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim", 
+		vec2(0, 10), 
+		ofColor::white, 
+		ofColor::black);
 
 	Utility::DirectionalLight dirLight;
 	dirLight.direction = normalize(vec3(0, -1, 0));
@@ -84,39 +90,36 @@ void ofApp::draw(){
 			MVP = mat4();
 	}
 
+	// TODO: move this into utility?
+	Utility::UniformVariableData uniforms;
 	if (usingNormals) {
-		normalShader.begin();
-		normalShader.setUniformMatrix4f("mvp", MVP);
-		normalShader.setUniformMatrix3f("normal", normalMatrix);
-		torusMesh.draw();
-		normalShader.end();
+		uniforms.mvp = MVP;
+		uniforms.normal = normalMatrix;
+		Utility::useNormalShader(normalShader, torusMesh, uniforms);
 	}
 	else if (usingDiffuse) {
-		diffuseShader.begin();
-		diffuseShader.setUniformMatrix4f("mvp", MVP);
+		uniforms.mvp = MVP;
 		if (mode == 3) {
-			diffuseShader.setUniformMatrix3f("normal", normalMatrixDiffuse);
+			uniforms.normal = normalMatrixDiffuse;
 		}
 		else {
-			diffuseShader.setUniformMatrix3f("normal", normalMatrix);
+			uniforms.normal = normalMatrix;
 		}
-		diffuseShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
-		diffuseShader.setUniform3f("lightDir", Utility::getLightDirection(dirLight));
-		diffuseShader.setUniform3f("lightCol", Utility::getLightColor(dirLight));
-		torusMesh.draw();
-		diffuseShader.end();
+		uniforms.meshCol = glm::vec3(1, 0, 0);
+		uniforms.lightCol = Utility::getLightColor(dirLight);
+		uniforms.lightDir = Utility::getLightDirection(dirLight);
+		Utility::useDiffuseShader(diffuseShader, torusMesh, uniforms);
 	}
 	else if (usingRim) {
-		rimShader.begin();
-		rimShader.setUniformMatrix4f("mvp", perspDiffuseMVP);
-		rimShader.setUniformMatrix3f("normal", normalMatrixDiffuse);
-		rimShader.setUniformMatrix4f("model", model);
-		rimShader.setUniform3f("meshCol", glm::vec3(1, 1, 1));
-		rimShader.setUniform3f("cameraPos", cam.position);
-		torusMesh.draw();
-		rimShader.end();
+		uniforms.mvp = MVP;
+		uniforms.normal = normalMatrixDiffuse;
+		uniforms.model = model;
+		uniforms.meshCol = glm::vec3(1, 1, 1);
+		uniforms.cameraPos = cam.position;
+		Utility::useRimShader(rimShader, torusMesh, uniforms);
 	}
 	else {
+		//TODO: extract this
 		uvShader.begin();
 		uvShader.setUniformMatrix4f("mvp", MVP);
 		torusMesh.draw();
@@ -149,21 +152,24 @@ void ofApp::keyPressed(int key){
 	}
 
 	if (key == ofKey::OF_KEY_TAB) {
+		Utility::setShaderMode(usingNormals);
+
 		Utility::setShaderMode(usingRim, true);
 		Utility::setShaderMode(usingDiffuse, true);
-		Utility::setShaderMode(usingNormals);
 	}
 
 	if (key == ofKey::OF_KEY_LEFT_CONTROL) {
+		Utility::setShaderMode(usingDiffuse);
+
 		Utility::setShaderMode(usingNormals, true);
 		Utility::setShaderMode(usingRim, true);
-		Utility::setShaderMode(usingDiffuse);
 	}
 
 	if (key == ofKey::OF_KEY_F1) {
+		Utility::setShaderMode(usingRim);
+
 		Utility::setShaderMode(usingNormals, true);
 		Utility::setShaderMode(usingDiffuse, true);
-		Utility::setShaderMode(usingRim);
 	}
 }
 

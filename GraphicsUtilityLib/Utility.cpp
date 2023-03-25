@@ -71,3 +71,33 @@ void Utility::setShaderMode(bool& isModeOn, bool setToFalse) {
         }
     }
 }
+
+void Utility::useNormalShader(ofShader normalShader, ofMesh torusMesh, UniformVariableData uniforms) {
+    normalShader.begin();
+    normalShader.setUniformMatrix4f("mvp", uniforms.mvp);
+    normalShader.setUniformMatrix3f("normal", uniforms.normal);
+    torusMesh.draw();
+    normalShader.end();
+}
+
+void Utility::useDiffuseShader(ofShader diffuseShader, ofMesh torusMesh, UniformVariableData uniforms) {
+    diffuseShader.begin();
+    diffuseShader.setUniformMatrix4f("mvp", uniforms.mvp);
+    diffuseShader.setUniformMatrix3f("normal", uniforms.normal);
+    diffuseShader.setUniform3f("meshCol", uniforms.meshCol);
+    diffuseShader.setUniform3f("lightDir", uniforms.lightDir);
+    diffuseShader.setUniform3f("lightCol", uniforms.lightCol);
+    torusMesh.draw();
+    diffuseShader.end();
+}
+
+void Utility::useRimShader(ofShader rimShader, ofMesh torusMesh, UniformVariableData uniforms) {
+    rimShader.begin();
+    rimShader.setUniformMatrix4f("mvp", uniforms.mvp);
+    rimShader.setUniformMatrix3f("normal", uniforms.normal);
+    rimShader.setUniformMatrix4f("model", uniforms.model);
+    rimShader.setUniform3f("meshCol", uniforms.meshCol);
+    rimShader.setUniform3f("cameraPos", uniforms.cameraPos);
+    torusMesh.draw();
+    rimShader.end();
+}
