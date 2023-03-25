@@ -208,6 +208,7 @@
     <None Include="bin\data\mesh.vert" />
     <None Include="bin\data\normal_vis.frag" />
     <None Include="bin\data\passthrough.vert" />
+    <None Include="bin\data\rimAndDir.frag" />
     <None Include="bin\data\rimLight.frag" />
     <None Include="bin\data\rimLight.vert" />
     <None Include="bin\data\torus.ply" />

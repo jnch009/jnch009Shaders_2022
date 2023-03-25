@@ -32,5 +32,6 @@
     <None Include="bin\data\diffuse.frag" />
     <None Include="bin\data\rimLight.frag" />
     <None Include="bin\data\rimLight.vert" />
+    <None Include="bin\data\rimAndDir.frag" />
   </ItemGroup>
 </Project>
