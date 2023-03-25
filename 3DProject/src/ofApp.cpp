@@ -9,6 +9,7 @@ void ofApp::setup(){
 	normalShader.load("mesh.vert", "normal_vis.frag");
 	diffuseShader.load("mesh.vert", "diffuse.frag");
 	uvShader.load("passthrough.vert", "uv_vis.frag");
+	rimShader.load("rimLight.vert", "rimLight.frag");
 }
 
 //--------------------------------------------------------------
@@ -105,6 +106,16 @@ void ofApp::draw(){
 		torusMesh.draw();
 		diffuseShader.end();
 	}
+	else if (usingRim) {
+		rimShader.begin();
+		rimShader.setUniformMatrix4f("mvp", perspDiffuseMVP);
+		rimShader.setUniformMatrix3f("normal", normalMatrixDiffuse);
+		rimShader.setUniformMatrix4f("model", model);
+		rimShader.setUniform3f("meshCol", glm::vec3(1, 1, 1));
+		rimShader.setUniform3f("cameraPos", cam.position);
+		torusMesh.draw();
+		rimShader.end();
+	}
 	else {
 		uvShader.begin();
 		uvShader.setUniformMatrix4f("mvp", MVP);
@@ -138,21 +149,21 @@ void ofApp::keyPressed(int key){
 	}
 
 	if (key == ofKey::OF_KEY_TAB) {
-		if (usingNormals) {
-			usingNormals = false;
-		}
-		else {
-			usingNormals = true;
-		}
+		Utility::setShaderMode(usingRim, true);
+		Utility::setShaderMode(usingDiffuse, true);
+		Utility::setShaderMode(usingNormals);
 	}
 
 	if (key == ofKey::OF_KEY_LEFT_CONTROL) {
-		if (usingDiffuse) {
-			usingDiffuse = false;
-		}
-		else {
-			usingDiffuse = true;
-		}
+		Utility::setShaderMode(usingNormals, true);
+		Utility::setShaderMode(usingRim, true);
+		Utility::setShaderMode(usingDiffuse);
+	}
+
+	if (key == ofKey::OF_KEY_F1) {
+		Utility::setShaderMode(usingNormals, true);
+		Utility::setShaderMode(usingDiffuse, true);
+		Utility::setShaderMode(usingRim);
 	}
 }
 

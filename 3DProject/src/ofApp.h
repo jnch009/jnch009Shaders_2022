@@ -25,10 +25,12 @@ class ofApp : public ofBaseApp{
 		ofShader uvShader;
 		ofShader normalShader;
 		ofShader diffuseShader;
+		ofShader rimShader;
 		Utility::CameraData cam;
 		int mode = 0;
 		bool usingNormals = false;
 		bool usingDiffuse = false;
+		bool usingRim = false;
 		glm::mat4 MVP;
 		float fov = 100.0f;
 		bool increaseFov = false;
