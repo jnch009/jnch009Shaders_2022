@@ -30,5 +30,7 @@
     <None Include="bin\data\mesh.vert" />
     <None Include="bin\data\normal_vis.frag" />
     <None Include="bin\data\diffuse.frag" />
+    <None Include="bin\data\rimLight.frag" />
+    <None Include="bin\data\rimLight.vert" />
   </ItemGroup>
 </Project>
