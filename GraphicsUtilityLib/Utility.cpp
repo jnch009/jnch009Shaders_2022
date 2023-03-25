@@ -56,20 +56,23 @@ glm::vec3 Utility::getLightColor(Utility::DirectionalLight& l) {
 
 /** 
 setShaderMode is a toggle that allows us to turn the shader mode on or off.
-If setToFalse is true, we override the toggle and always set it to false
+currentShader represents the shader we want to toggle based on a keypress.
+allShaders repesents the full list of all shaders we have and want to turn off if they don't match our currentShader.
 */
-void Utility::setShaderMode(bool& isModeOn, bool setToFalse) {
-    if (setToFalse) {
-        isModeOn = false;
-    }
-    else {
-        if (isModeOn) {
-            isModeOn = false;
+void Utility::setShaderMode(bool& currentShader, std::vector<bool*> allShaders) {
+    for (bool* shader : allShaders) {
+        if (&currentShader != shader) {
+            *shader = false;
         }
         else {
-            isModeOn = true;
+            if (currentShader) {
+                currentShader = false;
+            }
+            else {
+                currentShader = true;
+            }
         }
-    }
+    }   
 }
 
 void Utility::useNormalShader(ofShader normalShader, ofMesh torusMesh, UniformVariableData uniforms) {
@@ -100,4 +103,17 @@ void Utility::useRimShader(ofShader rimShader, ofMesh torusMesh, UniformVariable
     rimShader.setUniform3f("cameraPos", uniforms.cameraPos);
     torusMesh.draw();
     rimShader.end();
+}
+
+void Utility::useRimAndDirShader(ofShader rimAndDirShader, ofMesh torusMesh, UniformVariableData uniforms) {
+    rimAndDirShader.begin();
+    rimAndDirShader.setUniformMatrix4f("mvp", uniforms.mvp);
+    rimAndDirShader.setUniformMatrix3f("normal", uniforms.normal);
+    rimAndDirShader.setUniformMatrix4f("model", uniforms.model);
+    rimAndDirShader.setUniform3f("meshCol", uniforms.meshCol);
+    rimAndDirShader.setUniform3f("cameraPos", uniforms.cameraPos);
+    rimAndDirShader.setUniform3f("lightDir", uniforms.lightDir);
+    rimAndDirShader.setUniform3f("lightCol", uniforms.lightCol);
+    torusMesh.draw();
+    rimAndDirShader.end();
 }

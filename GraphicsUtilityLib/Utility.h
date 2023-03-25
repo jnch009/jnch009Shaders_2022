@@ -31,8 +31,9 @@ public:
     static float angleBetween(glm::vec3 a, glm::vec3 b);
     static glm::vec3 getLightDirection(DirectionalLight& l);
     static glm::vec3 getLightColor(DirectionalLight& l);
-    static void setShaderMode(bool& isModeOn, bool setToFalse = false);
+    static void setShaderMode(bool& isModeOn, std::vector<bool*> allShaders);
     static void useNormalShader(ofShader shader, ofMesh mesh, UniformVariableData uniforms);
     static void useDiffuseShader(ofShader shader, ofMesh mesh, UniformVariableData uniforms);
     static void useRimShader(ofShader shader, ofMesh mesh, UniformVariableData uniforms);
+    static void useRimAndDirShader(ofShader shader, ofMesh mesh, UniformVariableData uniforms);
 };

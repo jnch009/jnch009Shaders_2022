@@ -3,6 +3,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	shadersToDisable.push_back(&usingDiffuse);
+	shadersToDisable.push_back(&usingRim);
+	shadersToDisable.push_back(&usingRimAndDir);
+	shadersToDisable.push_back(&usingNormals);
+
 	ofDisableArbTex();
 	ofEnableDepthTest();
 	torusMesh.load("torus.ply");
@@ -39,7 +44,7 @@ void ofApp::update(){
 void ofApp::draw(){
 	using namespace glm;
 
-	ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim", 
+	ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim\nF2: Rim+Dir", 
 		vec2(0, 10), 
 		ofColor::white, 
 		ofColor::black);
@@ -118,6 +123,16 @@ void ofApp::draw(){
 		uniforms.cameraPos = cam.position;
 		Utility::useRimShader(rimShader, torusMesh, uniforms);
 	}
+	else if (usingRimAndDir) {
+		uniforms.mvp = MVP;
+		uniforms.normal = normalMatrixDiffuse;
+		uniforms.model = model;
+		uniforms.meshCol = glm::vec3(1, 0, 0);
+		uniforms.cameraPos = cam.position;
+		uniforms.lightCol = Utility::getLightColor(dirLight);
+		uniforms.lightDir = Utility::getLightDirection(dirLight);
+		Utility::useRimAndDirShader(rimAndDirShader, torusMesh, uniforms);
+	}
 	else {
 		//TODO: extract this
 		uvShader.begin();
@@ -152,24 +167,19 @@ void ofApp::keyPressed(int key){
 	}
 
 	if (key == ofKey::OF_KEY_TAB) {
-		Utility::setShaderMode(usingNormals);
-
-		Utility::setShaderMode(usingRim, true);
-		Utility::setShaderMode(usingDiffuse, true);
+		Utility::setShaderMode(usingNormals, shadersToDisable);
 	}
 
 	if (key == ofKey::OF_KEY_LEFT_CONTROL) {
-		Utility::setShaderMode(usingDiffuse);
-
-		Utility::setShaderMode(usingNormals, true);
-		Utility::setShaderMode(usingRim, true);
+		Utility::setShaderMode(usingDiffuse, shadersToDisable);
 	}
 
 	if (key == ofKey::OF_KEY_F1) {
-		Utility::setShaderMode(usingRim);
+		Utility::setShaderMode(usingRim, shadersToDisable);
+	}
 
-		Utility::setShaderMode(usingNormals, true);
-		Utility::setShaderMode(usingDiffuse, true);
+	if (key == ofKey::OF_KEY_F2) {
+		Utility::setShaderMode(usingRimAndDir, shadersToDisable);
 	}
 }
 

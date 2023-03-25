@@ -32,6 +32,8 @@ class ofApp : public ofBaseApp{
 		bool usingNormals = false;
 		bool usingDiffuse = false;
 		bool usingRim = false;
+		bool usingRimAndDir = false;
+		std::vector<bool*> shadersToDisable;
 		glm::mat4 MVP;
 		float fov = 100.0f;
 		bool increaseFov = false;
