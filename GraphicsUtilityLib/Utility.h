@@ -21,4 +21,5 @@ public:
     static float angleBetween(glm::vec3 a, glm::vec3 b);
     static glm::vec3 getLightDirection(DirectionalLight& l);
     static glm::vec3 getLightColor(DirectionalLight& l);
+    static void setShaderMode(bool& isModeOn, bool setToFalse = false);
 };

@@ -53,3 +53,21 @@ glm::vec3 Utility::getLightDirection(Utility::DirectionalLight& l) {
 glm::vec3 Utility::getLightColor(Utility::DirectionalLight& l) {
     return l.color * l.intensity;
 }
+
+/** 
+setShaderMode is a toggle that allows us to turn the shader mode on or off.
+If setToFalse is true, we override the toggle and always set it to false
+*/
+void Utility::setShaderMode(bool& isModeOn, bool setToFalse) {
+    if (setToFalse) {
+        isModeOn = false;
+    }
+    else {
+        if (isModeOn) {
+            isModeOn = false;
+        }
+        else {
+            isModeOn = true;
+        }
+    }
+}
