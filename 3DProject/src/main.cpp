@@ -8,6 +8,7 @@ int main() {
 	glSettings.windowMode = OF_WINDOW;
 	glSettings.setGLVersion(4, 1);
 	ofCreateWindow(glSettings);
+	ofSetBackgroundColor(0, 0, 0);
 
 	// this kicks off the running of my app
 	// can be OF_WINDOW or OF_FULLSCREEN

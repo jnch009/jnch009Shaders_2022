@@ -1,9 +1,15 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Utility.h"
 
 class ofApp : public ofBaseApp{
+	ofMesh quad;
+	ofShader shader;
+	ofImage img;
+	ofImage img2;
+	glm::vec4 triangleColor = glm::vec4(1, 0, 0, 1);
+	float brightness = 1.0f;
+
 	public:
 		void setup();
 		void update();
@@ -20,22 +26,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
-		ofMesh torusMesh;
-		ofShader uvShader;
-		ofShader normalShader;
-		ofShader diffuseShader;
-		ofShader rimShader;
-		ofShader rimAndDirShader;
-		Utility::CameraData cam;
-		int mode = 0;
-		bool usingNormals = false;
-		bool usingDiffuse = false;
-		bool usingRim = false;
-		bool usingRimAndDir = false;
-		std::vector<bool*> shadersToDisable;
-		glm::mat4 MVP;
-		float fov = 100.0f;
-		bool increaseFov = false;
-		bool decreaseFov = false;
+		void updateColor(glm::vec4 newColor);
+		void setupMesh(ofMesh& mesh, vector<glm::vec3> vertices, vector<glm::vec2> texCoords);
+		void loadShader(int shaderToLoad);
 };
