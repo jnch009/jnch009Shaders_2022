@@ -211,6 +211,7 @@
     <None Include="bin\data\rimAndDir.frag" />
     <None Include="bin\data\rimLight.frag" />
     <None Include="bin\data\rimLight.vert" />
+    <None Include="bin\data\specular.frag" />
     <None Include="bin\data\torus.ply" />
     <None Include="bin\data\uv_vis.frag" />
   </ItemGroup>

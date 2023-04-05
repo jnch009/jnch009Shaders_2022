@@ -33,5 +33,6 @@
     <None Include="bin\data\rimLight.frag" />
     <None Include="bin\data\rimLight.vert" />
     <None Include="bin\data\rimAndDir.frag" />
+    <None Include="bin\data\specular.frag" />
   </ItemGroup>
 </Project>
