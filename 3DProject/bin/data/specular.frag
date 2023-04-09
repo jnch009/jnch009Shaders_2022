@@ -21,7 +21,12 @@ void main(){
 	vec3 toCam = normalize(camPos - fragWorldPos);
 	float specAmt = max(0.0,dot(refl, toCam));
 	float specBrightness = pow(specAmt, 16.0);
-	outCol = vec4(lightCol * meshSpecCol * specBrightness, 1.0);
+	vec3 specCol = meshSpecCol * lightCol * specBrightness;
+
+	float diffAmt = max(0.0, dot(normalVec, lightDir)); // prevent negative brightness
+	vec3 diffCol = meshCol * lightCol * diffAmt;
+
+	outCol = vec4(specCol + diffCol, 1.0);
 
 }
 

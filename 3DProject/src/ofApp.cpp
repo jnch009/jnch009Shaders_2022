@@ -78,7 +78,8 @@ void ofApp::draw(){
 	view = inverse(translate(cam.position)
 		* rotate(cAngle, right));
 
-	model = rotate(radians(90.0f), right) * scale(vec3(0.5, 0.5, 0.5));
+	model = rotate(radians(90.0f), right) * 
+		scale(vec3(0.5, 0.5, 0.5));
 	mat4 normalMatrixDiffuse = transpose(inverse(mat3(model)));
 	mat4 perspDiffuseMVP = perspProj * view * model;
 
@@ -155,6 +156,7 @@ void ofApp::draw(){
 		specularShader.setUniform3f("lightDir", uniforms.lightDir);
 		specularShader.setUniform3f("lightCol", uniforms.lightCol);
 		specularShader.setUniform3f("meshSpecCol", glm::vec3(1,1,1));
+		specularShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
 		torusMesh.draw();
 		specularShader.end();
 	}
