@@ -27,12 +27,15 @@ class ofApp : public ofBaseApp{
 		ofShader diffuseShader;
 		ofShader rimShader;
 		ofShader rimAndDirShader;
+		ofShader specularShader;
+
 		Utility::CameraData cam;
 		int mode = 0;
 		bool usingNormals = false;
 		bool usingDiffuse = false;
 		bool usingRim = false;
 		bool usingRimAndDir = false;
+		bool usingSpec = false;
 		std::vector<bool*> shadersToDisable;
 		glm::mat4 MVP;
 		float fov = 100.0f;

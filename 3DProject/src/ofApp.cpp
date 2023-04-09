@@ -7,6 +7,7 @@ void ofApp::setup(){
 	shadersToDisable.push_back(&usingRim);
 	shadersToDisable.push_back(&usingRimAndDir);
 	shadersToDisable.push_back(&usingNormals);
+	shadersToDisable.push_back(&usingSpec);
 
 	ofDisableArbTex();
 	ofEnableDepthTest();
@@ -16,6 +17,7 @@ void ofApp::setup(){
 	uvShader.load("passthrough.vert", "uv_vis.frag");
 	rimShader.load("rimLight.vert", "rimLight.frag");
 	rimAndDirShader.load("rimLight.vert", "rimAndDir.frag");
+	specularShader.load("rimLight.vert", "specular.frag");
 }
 
 //--------------------------------------------------------------
@@ -50,7 +52,7 @@ void ofApp::draw(){
 		ofColor::black);
 
 	Utility::DirectionalLight dirLight;
-	dirLight.direction = normalize(vec3(0, -1, 0));
+	dirLight.direction = normalize(vec3(1, -1, 0));
 	dirLight.color = vec3(1, 1, 1);
 	dirLight.intensity = 1.0f;
 
@@ -72,7 +74,10 @@ void ofApp::draw(){
 	cam.position = vec3(0, 0.75f, 1.0f);
 	float cAngle = radians(-45.0f);
 	vec3 right = vec3(1, 0, 0);
-	view = inverse(translate(cam.position) * rotate(cAngle, right));
+
+	view = inverse(translate(cam.position)
+		* rotate(cAngle, right));
+
 	model = rotate(radians(90.0f), right) * scale(vec3(0.5, 0.5, 0.5));
 	mat4 normalMatrixDiffuse = transpose(inverse(mat3(model)));
 	mat4 perspDiffuseMVP = perspProj * view * model;
@@ -133,6 +138,26 @@ void ofApp::draw(){
 		uniforms.lightDir = Utility::getLightDirection(dirLight);
 		Utility::useRimAndDirShader(rimAndDirShader, torusMesh, uniforms);
 	}
+	else if (usingSpec) {
+		uniforms.mvp = MVP;
+		uniforms.normal = normalMatrixDiffuse;
+		uniforms.model = model;
+		uniforms.meshCol = glm::vec3(1, 0, 0);
+		uniforms.cameraPos = cam.position;
+		uniforms.lightCol = Utility::getLightColor(dirLight);
+		uniforms.lightDir = Utility::getLightDirection(dirLight);
+
+		specularShader.begin();
+		specularShader.setUniformMatrix4f("mvp", uniforms.mvp);
+		specularShader.setUniformMatrix3f("normal", uniforms.normal);
+		specularShader.setUniformMatrix4f("model", uniforms.model);
+		specularShader.setUniform3f("cameraPos", uniforms.cameraPos);
+		specularShader.setUniform3f("lightDir", uniforms.lightDir);
+		specularShader.setUniform3f("lightCol", uniforms.lightCol);
+		specularShader.setUniform3f("meshSpecCol", glm::vec3(1,1,1));
+		torusMesh.draw();
+		specularShader.end();
+	}
 	else {
 		//TODO: extract this
 		uvShader.begin();
@@ -180,6 +205,10 @@ void ofApp::keyPressed(int key){
 
 	if (key == ofKey::OF_KEY_F2) {
 		Utility::setShaderMode(usingRimAndDir, shadersToDisable);
+	}
+
+	if (key == ofKey::OF_KEY_F3) {
+		Utility::setShaderMode(usingSpec, shadersToDisable);
 	}
 }
 
