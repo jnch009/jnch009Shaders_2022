@@ -162,7 +162,8 @@ void ofApp::draw(){
 
 		// TODO: add new screen with green mesh
 		// TODO: extract out this code until Utility.cpp
-		// TODO: (hard) add the ability to update ambientCol values through a GUI or UI
+		// TODO: (hard) add the ability to update ambientCol values through a GUI or UI 
+		// here is a resource: https://openframeworks.cc/learning/01_basics/how_to_create_slider/
 
 		torusMesh.draw();
 		specularShader.end();
