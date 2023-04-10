@@ -157,6 +157,13 @@ void ofApp::draw(){
 		specularShader.setUniform3f("lightCol", uniforms.lightCol);
 		specularShader.setUniform3f("meshSpecCol", glm::vec3(1,1,1));
 		specularShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
+		//specularShader.setUniform3f("ambientCol", glm::vec3(0.5, 0.5, 0.5));
+		specularShader.setUniform3f("ambientCol", glm::vec3(0.75, 0.25, 0.25));
+
+		// TODO: add new screen with green mesh
+		// TODO: extract out this code until Utility.cpp
+		// TODO: (hard) add the ability to update ambientCol values through a GUI or UI
+
 		torusMesh.draw();
 		specularShader.end();
 	}

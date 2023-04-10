@@ -5,6 +5,7 @@ uniform vec3 lightCol;
 uniform vec3 camPos;
 uniform vec3 meshCol;
 uniform vec3 meshSpecCol;
+uniform vec3 ambientCol;
 in vec3 fragWorldPos;
 in vec3 fragNrm;
 out vec4 outCol;
@@ -26,7 +27,7 @@ void main(){
 	float diffAmt = max(0.0, dot(normalVec, lightDir)); // prevent negative brightness
 	vec3 diffCol = meshCol * lightCol * diffAmt;
 
-	outCol = vec4(specCol + diffCol, 1.0);
+	vec3 ambient = meshCol * ambientCol;
+	outCol = vec4(specCol + diffCol + ambient, 1.0);
 
 }
-
