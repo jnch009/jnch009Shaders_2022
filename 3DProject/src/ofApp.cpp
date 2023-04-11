@@ -11,6 +11,10 @@ void ofApp::setup(){
 
 	ofDisableArbTex();
 	ofEnableDepthTest();
+
+	gui.setup();
+	gui.add(radius.setup("radius", 140, 10, 300));
+
 	torusMesh.load("torus.ply");
 	normalShader.load("mesh.vert", "normal_vis.frag");
 	diffuseShader.load("mesh.vert", "diffuse.frag");
@@ -44,12 +48,20 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	// Rendering our meshes with depth testing is needed for z-index testing
+	// HOWEVER, we don't want this to happen to our GUI, so we need to disable it
+	// then re-enable it after it is drawn.
+	ofDisableDepthTest();
+	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, radius);
+	gui.draw();
+	ofEnableDepthTest();
+
 	using namespace glm;
 
-	ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim\nF2: Rim+Dir", 
+	/*ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim\nF2: Rim+Dir", 
 		vec2(0, 10), 
 		ofColor::white, 
-		ofColor::black);
+		ofColor::black);*/
 
 	Utility::DirectionalLight dirLight;
 	dirLight.direction = normalize(vec3(1, -1, 0));

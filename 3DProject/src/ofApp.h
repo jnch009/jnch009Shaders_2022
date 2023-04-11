@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Utility.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -20,6 +21,9 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
+		ofxFloatSlider radius;
+		ofxPanel gui;
 
 		ofMesh torusMesh;
 		ofShader uvShader;
