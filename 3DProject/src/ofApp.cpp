@@ -16,6 +16,7 @@ void ofApp::setup(){
 	gui.add(radius.setup("radius", 140, 10, 300));
 	gui.add(vec3Slider.setup("lightDirection", glm::vec3(1.0f, -1.0f, 0.0f), glm::vec3(-5.0,-5.0,-5.0), glm::vec3(5.0,5.0,5.0)));
 	gui.add(cameraPos.setup("cameraPos", glm::vec3(0, 0.75f, 1.0f), glm::vec3(-5.0, -5.0, -5.0), glm::vec3(5.0, 5.0, 5.0)));
+	gui.add(ambientCol.setup("ambient colour", glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
 
 	torusMesh.load("torus.ply");
 	normalShader.load("mesh.vert", "normal_vis.frag");
@@ -53,17 +54,15 @@ void ofApp::draw(){
 	// Rendering our meshes with depth testing is needed for z-index testing
 	// HOWEVER, we don't want this to happen to our GUI, so we need to disable it
 	// then re-enable it after it is drawn.
-	ofDisableDepthTest();
-	ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, radius);
-	gui.draw();
-	ofEnableDepthTest();
+	
+	if (showGui) {
+		ofDisableDepthTest();
+		gui.draw();
+		ofEnableDepthTest();
+	}
+	
 
 	using namespace glm;
-
-	/*ofDrawBitmapStringHighlight("Left/Right arrow: change MVP matrix\nUp/Down arrow: zoom in/out\nTab: Normals\nLeft Ctrl: Diffuse\nF1: Rim\nF2: Rim+Dir", 
-		vec2(0, 10), 
-		ofColor::white, 
-		ofColor::black);*/
 
 	Utility::DirectionalLight dirLight;
 	dirLight.direction = normalize(vec3(vec3Slider));
@@ -171,8 +170,7 @@ void ofApp::draw(){
 		specularShader.setUniform3f("lightCol", uniforms.lightCol);
 		specularShader.setUniform3f("meshSpecCol", glm::vec3(1,1,1));
 		specularShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
-		specularShader.setUniform3f("ambientCol", glm::vec3(0.5, 0.5, 0.5));
-		//specularShader.setUniform3f("ambientCol", glm::vec3(0.75, 0.25, 0.25));
+		specularShader.setUniform3f("ambientCol", glm::vec3(ambientCol));
 
 		// TODO: add new screen with green mesh
 		// TODO: extract out this code until Utility.cpp
@@ -233,6 +231,15 @@ void ofApp::keyPressed(int key){
 
 	if (key == ofKey::OF_KEY_F3) {
 		Utility::setShaderMode(usingSpec, shadersToDisable);
+	}
+
+	if (key == ofKey::OF_KEY_F5) {
+		if (showGui) {
+			showGui = false;
+		}
+		else {
+			showGui = true;
+		}
 	}
 }
 

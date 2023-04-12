@@ -26,7 +26,9 @@ class ofApp : public ofBaseApp{
 		ofxLabel vec3Label;
 		ofxVec3Slider vec3Slider;
 		ofxVec3Slider cameraPos;
+		ofxVec3Slider ambientCol;
 		ofxPanel gui;
+		bool showGui = false;
 
 		ofMesh torusMesh;
 		ofShader uvShader;
