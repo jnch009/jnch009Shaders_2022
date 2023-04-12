@@ -14,6 +14,7 @@ void ofApp::setup(){
 
 	gui.setup();
 	gui.add(radius.setup("radius", 140, 10, 300));
+	gui.add(vec3Slider.setup("vec3Slider", glm::vec3(0.5, 0.5, 0.5), glm::vec3(0,0,0), glm::vec3(1,1,1)));
 
 	torusMesh.load("torus.ply");
 	normalShader.load("mesh.vert", "normal_vis.frag");

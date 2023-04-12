@@ -23,6 +23,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		ofxFloatSlider radius;
+		ofxLabel vec3Label;
+		ofxVec3Slider vec3Slider;
 		ofxPanel gui;
 
 		ofMesh torusMesh;
