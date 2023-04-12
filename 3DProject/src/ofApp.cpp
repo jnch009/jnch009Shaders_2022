@@ -14,7 +14,8 @@ void ofApp::setup(){
 
 	gui.setup();
 	gui.add(radius.setup("radius", 140, 10, 300));
-	gui.add(vec3Slider.setup("vec3Slider", glm::vec3(0.5, 0.5, 0.5), glm::vec3(0,0,0), glm::vec3(1,1,1)));
+	gui.add(vec3Slider.setup("lightDirection", glm::vec3(1.0f, -1.0f, 0.0f), glm::vec3(-5.0,-5.0,-5.0), glm::vec3(5.0,5.0,5.0)));
+	gui.add(cameraPos.setup("cameraPos", glm::vec3(0, 0.75f, 1.0f), glm::vec3(-5.0, -5.0, -5.0), glm::vec3(5.0, 5.0, 5.0)));
 
 	torusMesh.load("torus.ply");
 	normalShader.load("mesh.vert", "normal_vis.frag");
@@ -65,7 +66,7 @@ void ofApp::draw(){
 		ofColor::black);*/
 
 	Utility::DirectionalLight dirLight;
-	dirLight.direction = normalize(vec3(1, -1, 0));
+	dirLight.direction = normalize(vec3(vec3Slider));
 	dirLight.color = vec3(1, 1, 1);
 	dirLight.intensity = 1.0f;
 
@@ -84,7 +85,7 @@ void ofApp::draw(){
 	mat3 normalMatrix = transpose(inverse(mat3(model)));
 
 	// rotating torus and showing an overhead view
-	cam.position = vec3(0, 0.75f, 1.0f);
+	cam.position = vec3(cameraPos);
 	float cAngle = radians(-45.0f);
 	vec3 right = vec3(1, 0, 0);
 
@@ -170,8 +171,8 @@ void ofApp::draw(){
 		specularShader.setUniform3f("lightCol", uniforms.lightCol);
 		specularShader.setUniform3f("meshSpecCol", glm::vec3(1,1,1));
 		specularShader.setUniform3f("meshCol", glm::vec3(1, 0, 0));
-		//specularShader.setUniform3f("ambientCol", glm::vec3(0.5, 0.5, 0.5));
-		specularShader.setUniform3f("ambientCol", glm::vec3(0.75, 0.25, 0.25));
+		specularShader.setUniform3f("ambientCol", glm::vec3(0.5, 0.5, 0.5));
+		//specularShader.setUniform3f("ambientCol", glm::vec3(0.75, 0.25, 0.25));
 
 		// TODO: add new screen with green mesh
 		// TODO: extract out this code until Utility.cpp

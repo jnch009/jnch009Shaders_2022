@@ -25,6 +25,7 @@ class ofApp : public ofBaseApp{
 		ofxFloatSlider radius;
 		ofxLabel vec3Label;
 		ofxVec3Slider vec3Slider;
+		ofxVec3Slider cameraPos;
 		ofxPanel gui;
 
 		ofMesh torusMesh;
